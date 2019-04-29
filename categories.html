@@ -9,62 +9,87 @@ session_start();
 <head>
 	<meta charset="UTF-8">
 	<title>ECE Amazon - Categories</title>
-	<meta name="viewport" content="width=device-width, initial-scale-1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript">
+		$(document).ready(function(){	
+			$('.header').height($(window).height());
+		});
+	</script>
 </head>
 <body>
+	<nav class="navbar navbar-expand-md">
+		<a class="navbar-brand" href="#">Logo</a>
+		<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="main-navigation">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="#">Catégories</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Best-Sellers</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Recherche</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Vendre</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Mes Comptes</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Panier</a></li>
+			</ul>
+		</div>
+	</nav>
 	<div class="container">
 	<div class="row">
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<a href="lights.jpg" target="_blank">
-						<img src="lights.jpg" style="width: 100%">
-						<div class="caption">
+			<div class="col-md-3">
+				<div class="img-thumbnail">
+					<a href="livres.jpg" target="_blank">
+						<img src="livres.jpg" style="width: 100%">
+						<div class="text-caption">
 							<p>
-								Lorem ipsum donec id elit non mi porta gravida at eget metus. 
+								Livres
 							</p>
 						</div>
 					</a>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<a href="nature.jpg" target="_blank">
-						<img src="nature.jpg" style="width: 100%">
+			<div class="col-md-offset-4 col-md-3">
+				<div class="img-thumbnail">
+					<a href="note.jpg" target="_blank">
+						<img src="note.jpg" style="width: 100%">
 						<div class="caption">
 							<p>
-								Lorem ipsum donec id elit non mi porta gravida at eget metus. 
+								Musiques
 							</p>
 						</div>
 					</a>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<a href="fjords.jpg" target="_blank">
-						<img src="fjords.jpg" style="width: 100%">
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+				<div class="img-thumbnail">
+					<a href="vetements.png" target="_blank">
+						<img src="vetements.png" style="width: 100%">
 						<div class="caption">
 							<p>
-								Lorem ipsum donec id elit non mi porta gravida at eget metus. 
+								Vetements
 							</p>
 						</div>
 					</a>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="thumbnail">
-					<a href="fjords.jpg" target="_blank">
-						<img src="fjords.jpg" style="width: 100%">
+			<div class="col-md-3">
+				<div class="img-thumbnail">
+					<a href="sploi.jpg" target="_blank">
+						<img src="sploi.jpg" style="width: 100%">
 						<div class="caption">
 							<p>
-								Lorem ipsum donec id elit non mi porta gravida at eget metus. 
+								Sports et Loisirs
 							</p>
 						</div>
 					</a>
 				</div>
 			</div>
-		</div>
+	</div>
+	</div>
 </body>
 </html>
