@@ -2,6 +2,19 @@
 //On demarre la sessions avant toute chose.
 session_start();
 
+$categories = $_GET['cat'];
+if (isset($categories)) {
+	$categories = explode(',', $categories);
+}
+$search = $_GET['search'];
+
+//identifier la BDD
+$database = "piscinedb2";
+
+//connectez-vous dans la BDD
+$db_handle = mysqli_connect('localhost', 'root', '');
+$db_found = mysqli_select_db($db_handle, $database);
+
 ?>
 
 <!DOCTYPE html>
@@ -51,8 +64,10 @@ session_start();
 		</div>
 		<div class="collapse navbar-collapse mx-auto order-2" style="width: 1400px;">
 			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
-				<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+				<input id="search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
+				<button onclick="
+				window.location.href = 'recherche.php?search=' + document.getElementById('search_bar').value + '';
+				" class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 			</form>
 		</div>
 		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-right" id="navbarSupportedContent">
@@ -67,6 +82,35 @@ session_start();
 			</ul>
 		</div>
 	</nav>
+	<br><br><br><br><br>
+	
+	<header class="page-header header container-fluid">
+		<br><br><br><br><br>
+		<div class="container">
+			<?php
+			$sql = "SHOW TABLES";
+			$result = mysqli_query($db_handle, $sql);
+			
+			if (isset($categories)) {
+				while ($value = mysqli_fetch_assoc($result)) {
+					$name = $value["Tables_in_piscinedb2"];
+					if (!strcmp($name, "admin") || !strcmp($name, "vendeur") || !strcmp($name, "acheteur") || !strcmp($name, "commandes")) {
+						continue;
+					}
+					foreach ($categories as $row => $elem) {
+						if (!strcmp($name, $elem)) {
+							echo "X ";
+							
+						}
+					}
+					echo $name."<br>";
+				}
+			}
+			?>
+		</div>
+	</header>
+	
+	
 	<footer class="page-footer">
 		<div class="container">
 			<div class="row">
@@ -91,5 +135,5 @@ session_start();
 			</div>
 			<div class="footer-copyright text-center">&copy; 2019 Copyright | Droit d'auteur: Jousselin Gaultier</div>
 		</footer>
-</body>
-</html>
+	</body>
+	</html>

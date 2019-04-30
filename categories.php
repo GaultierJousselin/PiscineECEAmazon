@@ -23,7 +23,7 @@ session_start();
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
 		<a class="navbar-brand" href="Accueil.php">
-			<img src="logo_simple_small.png" width=20" height="30" class="d-inline-block align-top" alt="">
+			<img src="images/logo_simple_small.png" width="20" height="30" class="d-inline-block align-top" alt="">
 			E€E
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,12 +36,12 @@ session_start();
 						Categorie
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Livres</a>
-						<a class="dropdown-item" href="#">Musiques</a>
-						<a class="dropdown-item" href="#">Vetements</a>
-						<a class="dropdown-item" href="#">Sports et Loisirs</a>
+						<a class="dropdown-item" href="recherche.php?search=livres">Livres</a>
+						<a class="dropdown-item" href="recherche.php?search=musiques">Musiques</a>
+						<a class="dropdown-item" href="recherche.php?search=vetements">Vetements</a>
+						<a class="dropdown-item" href="recherche.php?search=Sport et Loisirs">Sports et Loisirs</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="categorie.php">Tout regarder</a>
+						<a class="dropdown-item" href="categories.php">Tout regarder</a>
 					</div>
 				</li>
 				<li class="nav-item">
@@ -51,8 +51,10 @@ session_start();
 		</div>
 		<div class="collapse navbar-collapse mx-auto order-2" style="width: 1400px;">
 			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
-				<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+				<input id="search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
+				<button onclick="
+				window.location.href = 'recherche.php?search=' + document.getElementById('search_bar').value + '';
+				" class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 			</form>
 		</div>
 		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-right" id="navbarSupportedContent">
@@ -72,8 +74,8 @@ session_start();
 	<div class="row">
 			<div class="offset-md-1 col-md-3">
 				<div class="img-thumbnail">
-					<a href="recherche.html">
-						<img src="livres.jpg" style="width: 100%">
+					<a href="recherche.php?cat=livres">
+						<img src="images/livres.jpg" style="width: 100%">
 						<div class="caption">
 							<p>
 								Livres
@@ -84,8 +86,8 @@ session_start();
 			</div>
 			<div class="offset-md-4 col-md-3">
 				<div class="img-thumbnail">
-					<a href="recherche.html">
-						<img src="note.jpg" style="width: 100%">
+					<a href="recherche.php?cat=musiques">
+						<img src="images/note.jpg" style="width: 100%">
 						<div class="caption">
 							<p>
 								Musiques
@@ -99,8 +101,8 @@ session_start();
 	<div class="row">
 		<div class="offset-md-1 col-md-3">
 				<div class="img-thumbnail">
-					<a href="recherche.html">
-						<img src="vetements.png" style="width: 100%">
+					<a href="recherche.php?cat=vetements">
+						<img src="images/vetements.png" style="width: 100%">
 						<div class="caption">
 							<p>
 								Vetements
@@ -111,8 +113,8 @@ session_start();
 			</div>
 			<div class="offset-md-4 col-md-3">
 				<div class="img-thumbnail">
-					<a href="recherche.html">
-						<img src="sploi.jpg" style="width: 100%">
+					<a href="recherche.php?cat=Sport et Loisir">
+						<img src="images/sploi.jpg" style="width: 100%">
 						<div class="caption">
 							<p>
 								Sports et Loisirs

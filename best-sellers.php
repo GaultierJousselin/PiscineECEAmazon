@@ -2,6 +2,30 @@
 //On demarre la sessions avant toute chose.
 session_start();
 
+//identifier la BDD
+$database = "piscinedb2";
+
+//connectez-vous dans la BDD
+$db_handle = mysqli_connect('localhost', 'root', '');
+$db_found = mysqli_select_db($db_handle, $database);
+
+$sql = "SELECT * FROM livres ";
+$result = mysqli_query($db_handle, $sql);
+
+if($db_found) {
+	if (mysqli_num_rows($result) == 0) {
+		$liv_nom = "Aucun Best Seller";
+		$liv_image = "images/nothing.png";
+		$mus_nom = "Aucun Best Seller";
+		$mus_image = "images/nothing.png";
+		$vet_nom = "Aucun Best Seller";
+		$vet_image = "images/nothing.png";
+		$sel_nom = "Aucun Best Seller";
+		$sel_image = "images/nothing.png";
+	}
+} else {
+	echo "Nous ne trouvons rien.";
+}
 
 ?>
 
@@ -24,7 +48,7 @@ session_start();
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
 		<a class="navbar-brand" href="Accueil.php">
-			<img src="logo_simple_small.png" width=20" height="30" class="d-inline-block align-top" alt="">
+			<img src="images/logo_simple_small.png" width=20" height="30" class="d-inline-block align-top" alt="">
 			E€E
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,8 +76,10 @@ session_start();
 		</div>
 		<div class="collapse navbar-collapse mx-auto order-2" style="width: 1400px;">
 			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
-				<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+				<input id="search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
+				<button onclick="
+				window.location.href = 'recherche.php?search=' + document.getElementById('search_bar').value + '';
+				" class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 			</form>
 		</div>
 		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-right" id="navbarSupportedContent">
@@ -74,10 +100,10 @@ session_start();
 			<div class="offset-md-1 col-md-3">
 				<div class="img-thumbnail">
 					<a href="recherche.html/$idliv" target="_blank">
-						<img src=<?php echo $idliv_nom; ?> style="width: 100%">
+						<img src=<?php echo $liv_image; ?> style="width: 100%">
 						<div class="caption">
 							<p>
-								<?php echo $idliv_nom; ?>
+								<?php echo $liv_nom; ?>
 							</p>
 						</div>
 					</a>
@@ -86,10 +112,10 @@ session_start();
 			<div class="offset-md-4 col-md-3">
 				<div class="img-thumbnail">
 					<a href="recherche.html/$idmus" target="_blank">
-						<img src=<?php echo $idmus_nom; ?> style="width: 100%">
+						<img src="<?php echo $mus_image; ?>" style="width: 100%">
 						<div class="caption">
 							<p>
-								<?php echo $idmus_nom; ?>
+								<?php echo $mus_nom; ?>
 							</p>
 						</div>
 					</a>
@@ -101,10 +127,10 @@ session_start();
 		<div class="offset-md-1 col-md-3">
 				<div class="img-thumbnail">
 					<a href="recherche.html/$idvet" target="_blank">
-						<img src=<?php echo $idvet_nom; ?> style="width: 100%">
+						<img src="<?php echo $vet_image; ?>" style="width: 100%">
 						<div class="caption">
 							<p>
-								<?php echo $idvet_nom; ?>
+								<?php echo $vet_nom; ?>
 							</p>
 						</div>
 					</a>
@@ -113,10 +139,10 @@ session_start();
 			<div class="offset-md-4 col-md-3">
 				<div class="img-thumbnail">
 					<a href="recherche.html/$idsel" target="_blank">
-						<img src=<?php echo $idsel_nom; ?> style="width: 100%">
+						<img src="<?php echo $sel_image; ?>" style="width: 100%">
 						<div class="caption">
 							<p>
-								<?php echo $idsel_nom; ?>
+								<?php echo $sel_nom; ?>
 							</p>
 						</div>
 					</a>

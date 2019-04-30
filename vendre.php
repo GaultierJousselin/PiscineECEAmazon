@@ -23,7 +23,7 @@ session_start();
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
 		<a class="navbar-brand" href="Accueil.php">
-			<img src="logo_simple_small.png" width=20" height="30" class="d-inline-block align-top" alt="">
+			<img src="logo_simple_small.png" width="20" height="30" class="d-inline-block align-top" alt="">
 			E€E
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,8 +51,10 @@ session_start();
 		</div>
 		<div class="collapse navbar-collapse mx-auto order-2" style="width: 1400px;">
 			<form class="form-inline">
-				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
-				<button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+				<input id="search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
+				<button onclick="
+				window.location.href = 'recherche.php?search=' + document.getElementById('search_bar').value + '';
+				" class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
 			</form>
 		</div>
 		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-right" id="navbarSupportedContent">
@@ -67,6 +69,11 @@ session_start();
 			</ul>
 		</div>
 	</nav>
+	
+	<header class="page-header header container-fluid">
+		<br><br><br><br>
+	</header>
+	
 	<footer class="page-footer">
 		<div class="container">
 			<div class="row">
