@@ -22,7 +22,7 @@ session_start();
 </head>
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-		<a class="navbar-brand" href="Accueil.html">
+		<a class="navbar-brand" href="Accueil.php">
 			<img src="logo_simple_small.png" width=20" height="30" class="d-inline-block align-top" alt="">
 			E€E
 		</a>
@@ -41,11 +41,11 @@ session_start();
 						<a class="dropdown-item" href="#">Vetements</a>
 						<a class="dropdown-item" href="#">Sports et Loisirs</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="categories.html">Tout regarder</a>
+						<a class="dropdown-item" href="categories.php">Tout regarder</a>
 					</div>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="best-sellers.html">Best-Sellers</a>
+					<a class="nav-link" href="best-sellers.php">Best-Sellers</a>
 				</li>
 			</ul>
 		</div>
@@ -58,11 +58,11 @@ session_start();
 		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-right" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="vendre.html">Vendre</a>
+					<a class="nav-link" href="vendre.php">Vendre</a>
 				</li><li class="nav-item">
-					<a class="nav-link" href="compte.html">Mes Comptes</a>
+					<a class="nav-link" href="compte.php">Mes Comptes</a>
 				</li><li class="nav-item">
-					<a class="nav-link" href="panier.html">Panier</a>
+					<a class="nav-link" href="panier.php">Panier</a>
 				</li>
 			</ul>
 		</div>
