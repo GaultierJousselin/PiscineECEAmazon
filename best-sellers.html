@@ -72,11 +72,11 @@ session_start();
 	<div class="row">
 			<div class="offset-md-1 col-md-3">
 				<div class="img-thumbnail">
-					<a href="livres.jpg" target="_blank">
-						<img src="livres.jpg" style="width: 100%">
+					<a href="recherche.html/$idliv" target="_blank">
+						<img src="$idliv-image" style="width: 100%">
 						<div class="caption">
 							<p>
-								Livres
+								$idliv-nom
 							</p>
 						</div>
 					</a>
@@ -84,11 +84,11 @@ session_start();
 			</div>
 			<div class="offset-md-4 col-md-3">
 				<div class="img-thumbnail">
-					<a href="note.jpg" target="_blank">
-						<img src="note.jpg" style="width: 100%">
+					<a href="recherche.html/$idmus" target="_blank">
+						<img src="$idmus-image" style="width: 100%">
 						<div class="caption">
 							<p>
-								Musiques
+								$idmus-nom
 							</p>
 						</div>
 					</a>
@@ -99,11 +99,11 @@ session_start();
 	<div class="row">
 		<div class="offset-md-1 col-md-3">
 				<div class="img-thumbnail">
-					<a href="vetements.png" target="_blank">
-						<img src="vetements.png" style="width: 100%">
+					<a href="recherche.html/$idvet" target="_blank">
+						<img src="$idvet-image" style="width: 100%">
 						<div class="caption">
 							<p>
-								Vetements
+								<?php echo $idvet_nom; ?>
 							</p>
 						</div>
 					</a>
@@ -111,17 +111,42 @@ session_start();
 			</div>
 			<div class="offset-md-4 col-md-3">
 				<div class="img-thumbnail">
-					<a href="sploi.jpg" target="_blank">
-						<img src="sploi.jpg" style="width: 100%">
+					<a href="recherche.html/$idsel" target="_blank">
+						<img src="<?php echo $idsel_nom; ?>" style="width: 100%">
 						<div class="caption">
 							<p>
-								Sports et Loisirs
+								<?php echo $idsel_nom; ?>
 							</p>
 						</div>
 					</a>
 				</div>
 			</div>
 	</div>
+	<br><br><br><br>
 	</div>
+	<footer class="page-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-8 col-sm-12">
+					<h6 class="text-uppercase font-weight-bold">Information additionnelle</h6>
+					<p>
+						ECE Amazon est une entreprise de commerce électronique française basée à Paris. Elle est un des géants du Web Parisien, regroupés sous l'acronyme GAFFE.
+					</p>
+					<p>
+						Cette entreprise est gérée par trois jeunes ingénieurs fraichement sortient de l'ecole ECE Paris. 
+					</p>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<h6 class="text-uppercase font-weight-bold">Contact</h6>
+					<p>
+						37, quai de Grenelle, 75015 Paris, France <br>
+						info@eceamazon.ece.fr <br>
+						+33 01 02 03 04 05 <br>
+						+33 01 03 02 05 04
+					</p>
+				</div>
+			</div>
+			<div class="footer-copyright text-center">&copy; 2019 Copyright | Droit d'auteur: Jousselin Gaultier</div>
+		</footer>
 </body>
 </html>

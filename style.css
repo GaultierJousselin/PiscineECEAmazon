@@ -1,7 +1,7 @@
 body {
 	padding: 0px;
 	margin: 0px;
-	background: #56A8E8;
+	background: #98C4E7;
 }
 /*--- navigation bar ---*/
 .navbar {
@@ -122,4 +122,8 @@ features .form-control,
 .features {
 	margin: 0;
 }
+}
+.footer {
+	margin-top: 200px;
+
 }
