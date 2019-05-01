@@ -34,7 +34,7 @@
 
 
 
-	<form action="connexion.php" method="post">
+	<form action="traitement_inscription.php" method="post">
 			<div class="form-group row">
 				<label for="mail" class="col-md-1 col-form-label"></label>
 				<h2>Création de votre compte ECE</h2>
