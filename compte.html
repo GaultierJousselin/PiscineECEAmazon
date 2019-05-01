@@ -1,8 +1,3 @@
-<?php
-//On demarre la sessions avant toute chose.
-session_start();
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,5 +32,36 @@ session_start();
 			</ul>
 		</div>
 	</nav>
+
+		<form action="connexion.php" method="post">
+			<h2>Identifiez-vous</h2>
+			<div class="form-group">
+				<label for="mail" class="col-md-4 col-form-label">Adresse e-mail</label>
+				<div class="col-md-4">
+					<input type="text" class="form-control" name="mail" placeholder="@edu.ece.fr" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="MDP" class="col-md-4 col-form-label">Mot de passe</label>
+				<div class="col-md-4">
+					<input type="text" class="form-control" name="MDP"/>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-1 col-form-label"></label>
+				<label class="col-md-2 col-form-label">
+					<input type="submit" class="btn btn-primary" value="Identifiez-vous" name="button1">
+				</label>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2 col-form-label">Nouveau chez ECE ?</label>
+				<label class="col-md-2 col-form-label">
+					<input type="submit" class ="btn btn-primary" value="Créez un compte" name="button2">
+				</label>			
+			</div>
+		</form>
 </body>
 </html>
