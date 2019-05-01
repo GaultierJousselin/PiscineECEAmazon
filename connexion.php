@@ -22,7 +22,7 @@
 				die("Connection failed: " . $connection->connect_error);
 			}
 
-			$sql = "SELECT * FROM acheteur WHERE (mail = '$mail' && MDP = '$MDP')";
+			$sql = "SELECT * FROM acheteur WHERE (mail = '$mail' AND MDP = '$MDP')";
 			$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 			if(mysqli_num_rows($req) == 1){

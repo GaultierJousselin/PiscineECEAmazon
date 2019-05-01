@@ -49,7 +49,7 @@
 					<input type="text" class="form-control" name="mail" placeholder="@edu.ece.fr" />
 				</div>
 				<label class="col-md-1 col-form-label"></label>
-				<label for="image" class="col-md-1 col-form-label">Photo de profil</label>
+				<label for="image" class="col-md-2 col-form-label">Photo de profil</label>
 				<div class="col-md-2">
 					<input type="file" class="form-control" name="image"/>
 				</div>
@@ -63,7 +63,7 @@
 				</div>
 
 				<label for="wallpaper" class="col-md-1 col-form-label"></label>
-				<label for="wallpaper" class="col-md-1 col-form-label">Photo de couverture</label>
+				<label for="wallpaper" class="col-md-2 col-form-label">Photo de couverture</label>
 				<div class="col-md-2">
 					<input type="file" class="form-control" name="image"/>
 				</div>
