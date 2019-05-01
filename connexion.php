@@ -1,6 +1,12 @@
 <?php
 	
-	if(isset($_POST['button1'])) {
+	session_start();
+
+	if(!empty($_SESSION)) {
+		header('Location: '. 'page_compte.php');
+	}
+
+	if(isset($_POST['button1']) && empty($_SESSION) ) {
 		if(isset($_POST["mail"]) && isset($_POST["MDP"])) {
 			$mail = isset($_POST["mail"])? $_POST["mail"]: "";
 			$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
@@ -36,4 +42,5 @@
 
 		}
 	}
+
 ?>
