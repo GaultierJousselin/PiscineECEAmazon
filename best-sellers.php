@@ -48,7 +48,7 @@ if($db_found) {
 <body>
 	<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
 		<a class="navbar-brand" href="Accueil.php">
-			<img src="images/logo_simple_small.png" width=20" height="30" class="d-inline-block align-top" alt="">
+			<img src="images/logo_simple_small.png" width="20" height="30" class="d-inline-block align-top" alt="">
 			E€E
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,10 +61,10 @@ if($db_found) {
 						Categorie
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Livres</a>
-						<a class="dropdown-item" href="#">Musiques</a>
-						<a class="dropdown-item" href="#">Vetements</a>
-						<a class="dropdown-item" href="#">Sports et Loisirs</a>
+						<a class="dropdown-item" href="recherche.php?cat=livres">Livres</a>
+						<a class="dropdown-item" href="recherche.php?cat=musique">Musiques</a>
+						<a class="dropdown-item" href="recherche.php?cat=vetements">Vetements</a>
+						<a class="dropdown-item" href="recherche.php?cat=sel">Sports et Loisirs</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="categories.php">Tout regarder</a>
 					</div>
@@ -74,7 +74,7 @@ if($db_found) {
 				</li>
 			</ul>
 		</div>
-		<div class="collapse navbar-collapse mx-auto order-2" style="width: 1400px;">
+		<div class="collapse navbar-collapse mx-auto order-2" style="width: 2000px;">
 			<form class="form-inline">
 				<input id="search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
 				<button onclick="
