@@ -3,6 +3,12 @@ body {
 	margin: 0px;
 	background: #CCE8FF;
 }
+
+.product_table_search td {
+	vertical-align: top;
+	padding: 10px;
+}
+
 /*--- navigation bar ---*/
 .navbar {
 	background:#007AEB;
@@ -26,6 +32,11 @@ body {
 	background-position: center;
 	position: relative;
 }
+
+.container-margin {
+	margin-top: 100px;
+}
+
 .overlay {
 	position: absolute;
 	min-height: 100%;
@@ -101,29 +112,27 @@ features .form-control,
 	color: #666;
 	padding: 40px 0;
 }
-@media (max-width: 575.98px) { 
+
+@media (max-width: 576px) { 
 	.description {
-	left: 0;
-	padding: 0 15px;
-	position: absolute;
-	top: 10%;
-	transform: none;
-	text-align: center;
+		left: 0;
+		padding: 0 15px;
+		position: absolute;
+		top: 10%;
+		transform: none;
+		text-align: center;
+	}
+
+	.description h1 {
+		font-size: 2em;
+	}
+
+	.description p {
+		font-size: 1.2rem;
+	}
+
+	.features {
+		margin: 0;
+	}
 }
 
-.description h1 {
-	font-size: 2em;
-}
-
-.description p {
-	font-size: 1.2rem;
-}
-
-.features {
-	margin: 0;
-}
-}
-.footer {
-	margin-top: 200px;
-
-}

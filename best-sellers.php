@@ -9,11 +9,11 @@ $database = "piscinedb2";
 $db_handle = mysqli_connect('localhost', 'root', '');
 $db_found = mysqli_select_db($db_handle, $database);
 
-$sql = "SELECT * FROM livres ";
-$result = mysqli_query($db_handle, $sql);
+$sql = "SELECT * FROM `livres`";
+$result = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
 
 if($db_found) {
-	if (mysqli_num_rows($result) == 0) {
+	if (mysqli_num_rows($result) != 0) {
 		$liv_nom = "Aucun Best Seller";
 		$liv_image = "images/nothing.png";
 		$mus_nom = "Aucun Best Seller";
@@ -22,10 +22,16 @@ if($db_found) {
 		$vet_image = "images/nothing.png";
 		$sel_nom = "Aucun Best Seller";
 		$sel_image = "images/nothing.png";
+		echo "coucou";
+	}
+	else
+	{
+		echo "ERROR !!!!!!!!!!!";
 	}
 } else {
 	echo "Nous ne trouvons rien.";
 }
+
 
 ?>
 
@@ -46,134 +52,63 @@ if($db_found) {
 	</script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-		<a class="navbar-brand" href="Accueil.php">
-			<img src="images/logo_simple_small.png" width="20" height="30" class="d-inline-block align-top" alt="">
-			E€E
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2 navbar-left" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Categorie
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="recherche.php?cat=livres">Livres</a>
-						<a class="dropdown-item" href="recherche.php?cat=musique">Musiques</a>
-						<a class="dropdown-item" href="recherche.php?cat=vetements">Vetements</a>
-						<a class="dropdown-item" href="recherche.php?cat=sel">Sports et Loisirs</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="categories.php">Tout regarder</a>
+	<?php include 'Navbar.php'; ?>
+	<div class="container container-margin">
+		<div class="row">
+				<div class="offset-md-1 col-md-3">
+					<div class="img-thumbnail">
+						<a href="recherche.php/$idliv" target="_blank">
+							<img src="<?php echo $liv_image; ?>" style="width: 100%">
+							<div class="caption">
+								<p>
+									<?php echo $liv_nom; ?>
+								</p>
+							</div>
+						</a>
 					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="best-sellers.php">Best-Sellers</a>
-				</li>
-			</ul>
+				</div>
+				<div class="offset-md-4 col-md-3">
+					<div class="img-thumbnail">
+						<a href="recherche.php/$idmus" target="_blank">
+							<img src="<?php echo $mus_image; ?>" style="width: 100%">
+							<div class="caption">
+								<p>
+									<?php echo $mus_nom; ?>
+								</p>
+							</div>
+						</a>
+					</div>
+				</div>
 		</div>
-		<div class="collapse navbar-collapse mx-auto order-2" style="width: 2000px;">
-			<form class="form-inline">
-				<input id="search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
-				<button onclick="
-				window.location.href = 'recherche.php?search=' + document.getElementById('search_bar').value + '';
-				" class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-			</form>
-		</div>
-		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-right" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="vendre.php">Vendre</a>
-				</li><li class="nav-item">
-					<a class="nav-link" href="compte.php">Mes Comptes</a>
-				</li><li class="nav-item">
-					<a class="nav-link" href="panier.php">Panier</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<br><br><br><br>
-	<div class="container">
-	<div class="row">
+		<br>
+		<div class="row">
 			<div class="offset-md-1 col-md-3">
-				<div class="img-thumbnail">
-					<a href="recherche.html/$idliv" target="_blank">
-						<img src=<?php echo $liv_image; ?> style="width: 100%">
-						<div class="caption">
-							<p>
-								<?php echo $liv_nom; ?>
-							</p>
-						</div>
-					</a>
+					<div class="img-thumbnail">
+						<a href="recherche.php/$idvet" target="_blank">
+							<img src="<?php echo $vet_image; ?>" style="width: 100%">
+							<div class="caption">
+								<p>
+									<?php echo $vet_nom; ?>
+								</p>
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
-			<div class="offset-md-4 col-md-3">
-				<div class="img-thumbnail">
-					<a href="recherche.html/$idmus" target="_blank">
-						<img src="<?php echo $mus_image; ?>" style="width: 100%">
-						<div class="caption">
-							<p>
-								<?php echo $mus_nom; ?>
-							</p>
-						</div>
-					</a>
+				<div class="offset-md-4 col-md-3">
+					<div class="img-thumbnail">
+						<a href="recherche.php/$idsel" target="_blank">
+							<img src="<?php echo $sel_image; ?>" style="width: 100%">
+							<div class="caption">
+								<p>
+									<?php echo $sel_nom; ?>
+								</p>
+							</div>
+						</a>
+					</div>
 				</div>
-			</div>
+		</div>
+		<br><br><br><br>
 	</div>
-	<br>
-	<div class="row">
-		<div class="offset-md-1 col-md-3">
-				<div class="img-thumbnail">
-					<a href="recherche.html/$idvet" target="_blank">
-						<img src="<?php echo $vet_image; ?>" style="width: 100%">
-						<div class="caption">
-							<p>
-								<?php echo $vet_nom; ?>
-							</p>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div class="offset-md-4 col-md-3">
-				<div class="img-thumbnail">
-					<a href="recherche.html/$idsel" target="_blank">
-						<img src="<?php echo $sel_image; ?>" style="width: 100%">
-						<div class="caption">
-							<p>
-								<?php echo $sel_nom; ?>
-							</p>
-						</div>
-					</a>
-				</div>
-			</div>
-	</div>
-	<br><br><br><br>
-	</div>
-	<footer class="page-footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-md-8 col-sm-12">
-					<h6 class="text-uppercase font-weight-bold">Information additionnelle</h6>
-					<p>
-						ECE Amazon est une entreprise de commerce électronique française basée à Paris. Elle est un des géants du Web Parisien, regroupés sous l'acronyme GAFFE.
-					</p>
-					<p>
-						Cette entreprise est gérée par trois jeunes ingénieurs fraichement sortient de l'ecole ECE Paris. 
-					</p>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-12">
-					<h6 class="text-uppercase font-weight-bold">Contact</h6>
-					<p>
-						37, quai de Grenelle, 75015 Paris, France <br>
-						info@eceamazon.ece.fr <br>
-						+33 01 02 03 04 05 <br>
-						+33 01 03 02 05 04
-					</p>
-				</div>
-			</div>
-			<div class="footer-copyright text-center">&copy; 2019 Copyright | Droit d'auteur: Jousselin Gaultier</div>
-		</footer>
+	<?php include 'footer.php'; ?>
 </body>
 </html>

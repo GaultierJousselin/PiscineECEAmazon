@@ -2,19 +2,16 @@
 //On demarre la sessions avant toute chose.
 session_start();
 
+include 'global.php';
+
+if (isset($_GET['add']) && isset($_GET['id']))
+	addToCart($_GET['add'], $_GET['id']);
+
 $categories = $_GET['cat'];
 if (isset($categories)) {
 	$categories = explode(',', $categories);
 }
 $search = $_GET['search'];
-
-//identifier la BDD
-$database = "piscinedb2";
-
-//connectez-vous dans la BDD
-$db_handle = mysqli_connect('localhost', 'root', '');
-$db_found = mysqli_select_db($db_handle, $database);
-
 ?>
 
 <!DOCTYPE html>
@@ -31,108 +28,104 @@ $db_found = mysqli_select_db($db_handle, $database);
 		$(document).ready(function(){	
 			$('.header').height($(window).height());
 		});
+		function addCart(cat, id) {
+			var quantity = document.getElementById('q' + id).value;
+			window.location.href = 'recherche.php?add=' + cat + '&id=' + id + "$quantity=";
+		}
 	</script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-		<a class="navbar-brand" href="Accueil.php">
-			<img src="images/logo_simple_small.png" width="20" height="30" class="d-inline-block align-top" alt="">
-			E€E
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2 navbar-left" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Categorie
-					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="recherche.php?cat=livres">Livres</a>
-						<a class="dropdown-item" href="recherche.php?cat=musique">Musiques</a>
-						<a class="dropdown-item" href="recherche.php?cat=vetements">Vetements</a>
-						<a class="dropdown-item" href="recherche.php?cat=sel">Sports et Loisirs</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="categories.php">Tout regarder</a>
-					</div>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="best-sellers.php">Best-Sellers</a>
-				</li>
-			</ul>
-		</div>
-		<div class="collapse navbar-collapse mx-auto order-2" style="width: 2000px;">
-			<form class="form-inline">
-				<input id="search_bar" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 400px !important;">
-				<button onclick="
-				window.location.href = 'recherche.php?search=' + document.getElementById('search_bar').value + '';
-				" class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-			</form>
-		</div>
-		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2 navbar-right" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="vendre.php">Vendre</a>
-				</li><li class="nav-item">
-					<a class="nav-link" href="compte.php">Mes Comptes</a>
-				</li><li class="nav-item">
-					<a class="nav-link" href="panier.php">Panier</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<br><br><br><br><br>
-	
-	<header class="page-header header container-fluid">
-		<br><br><br><br><br>
-		<div class="container">
+	<?php include 'Navbar.php'; ?>
+		<div class="container container-margin">
 			<?php
 			$sql = "SHOW TABLES";
 			$result = mysqli_query($db_handle, $sql);
 			
-			if (isset($categories)) {
-				while ($value = mysqli_fetch_assoc($result)) {
-					$name = $value["Tables_in_piscinedb2"];
-					if (!strcmp($name, "admin") || !strcmp($name, "vendeur") || !strcmp($name, "acheteur") || !strcmp($name, "commandes")) {
-						continue;
+			$results = 0;
+			while ($value = mysqli_fetch_assoc($result)) {
+				$cat = $value["Tables_in_piscinedb2"];
+				if (!strcmp($cat, "admin") || !strcmp($cat, "vendeur") || !strcmp($cat, "acheteur") || !strcmp($cat, "commandes")) {
+					continue;
+				}
+
+				// echo "<strong>".$name.":</strong><br>";
+
+				if (isset($search))
+				{
+
+					$keywords = mysqli_real_escape_string($db_handle, htmlspecialchars($search));
+					$sql = "SELECT * FROM `".$cat."` WHERE `titre` LIKE '%".$keywords."%'";
+					$result2 = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
+					
+					if (mysqli_num_rows($result2) > 0)
+					{
+						while ($value = mysqli_fetch_assoc($result2)) {
+							echo "<hr />";
+							echo "<div class='container'>";
+							echo "	<table class='product_table_search'><tbody>";
+							echo "		<div class='row'>";
+							echo "			<tr class='col-md-2'>";
+							echo "				<td>";
+							echo "					<strong>".$value['titre']."</strong>";
+							echo "				</td>";
+							echo "			</tr>";
+							echo "		</div>";
+							echo "		<div class='row'>";
+							echo "			<tr class='col-md-6'>";
+							echo "				<td >";
+							echo "					<img src=".$value['photo']." alt='nous n avons pas trouvé' width= '150px'>";
+							echo "				</td>";
+							echo "				<td >";
+							echo "					<p>".$value['description']."</p><br />";
+							echo "					<p><strong>Prix : </strong>".$value['prix']." €</p><br />";
+							echo "					<br />";
+							echo "					<div class='form-group'>";
+							echo "					<div style='position: relative;'>";
+							echo "						<select id='q".$value['id']."' class='form-control' style='width:60px; position: absolute'>";
+							echo "							<option>1</option>";
+							echo "							<option>2</option>";
+							echo "							<option>3</option>";
+							echo "							<option>4</option>";
+							echo "							<option>5</option>";
+							echo "						</select>";
+							echo "						<button onclick='addCart(\"".$cat."\", ".$value['id'].")'' type='button' class='btn btn-success' style='position: absolute; left: 70px'>Ajouter à mon panier</button><br />";
+							echo "					</div>";
+							echo "					<br />";
+							echo "				</td>";
+							echo "			</tr>";
+							echo "		</div>";
+							echo "	</tbody></table>";
+							echo "</div>";
+
+
+							echo "<br />";
+							$results++;
+						}
 					}
+				}
+
+				// echo "<br />";
+
+				/*
+				if (isset($categories)) {
 					foreach ($categories as $row => $elem) {
 						if (!strcmp($name, $elem)) {
 							echo "X ";	
 						}
 					}
-					echo $name."<br>";
-				}
+				}*/
 			}
+
+			if ($results == 0)
+				{
+					echo "Rien de dispo !";
+				}
+
 			?>
 		</div>
-	</header>
+
+	<?php include 'footer.php'; ?>
 	
 	
-	<footer class="page-footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-md-8 col-sm-12">
-					<h6 class="text-uppercase font-weight-bold">Information additionnelle</h6>
-					<p>
-						ECE Amazon est une entreprise de commerce électronique française basée à Paris. Elle est un des géants du Web Parisien, regroupés sous l'acronyme GAFFE.
-					</p>
-					<p>
-						Cette entreprise est gérée par trois jeunes ingénieurs fraichement sortient de l'ecole ECE Paris. 
-					</p>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-12">
-					<h6 class="text-uppercase font-weight-bold">Contact</h6>
-					<p>
-						37, quai de Grenelle, 75015 Paris, France <br>
-						info@eceamazon.ece.fr <br>
-						+33 01 02 03 04 05 <br>
-						+33 01 03 02 05 04
-					</p>
-				</div>
-			</div>
-			<div class="footer-copyright text-center">&copy; 2019 Copyright | Droit d'auteur: Jousselin Gaultier</div>
-		</footer>
 	</body>
 	</html>
