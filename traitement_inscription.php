@@ -45,7 +45,7 @@
 		}
 		else {
 			echo 'Des champs sont vides';
-			header('Location: ' . 'compte.html');
+			header('Location: ' . 'compte.php');
 		}
 	}
 

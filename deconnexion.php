@@ -5,5 +5,5 @@
 
 	session_destroy();
 
-	header('Location: ' . "compte.html");
+	header('Location: ' . "compte.php");
 ?>

@@ -6,7 +6,7 @@
 	}
 
 	if(empty($_SESSION) ) {
-		header('Location: '. "compte.html");
+		header('Location: '. "compte.php");
 	}
 
 ?>

@@ -22,12 +22,12 @@
 		</button>
 		<div class="collapse navbar-collapse" id="main-navigation">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="categories.html">Catégories</a></li>
-				<li class="nav-item"><a class="nav-link" href="best-sellers.html">Best-Sellers</a></li>
-				<li class="nav-item"><a class="nav-link" href="recherche.html">Recherche</a></li>
-				<li class="nav-item"><a class="nav-link" href="vendre.html">Vendre</a></li>
-				<li class="nav-item"><a class="nav-link" href="preconnexion.php">Mes Comptes</a></li>
-				<li class="nav-item"><a class="nav-link" href="panier.html">Panier</a></li>
+				<li class="nav-item"><a class="nav-link" href="categories.php">Catégories</a></li>
+				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
+				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
+				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
+				<li class="nav-item"><a class="nav-link" href="preconnexion.php">Mon Comptes</a></li>
+				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
 			</ul>
 		</div>
 	</nav>
