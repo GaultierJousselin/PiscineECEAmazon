@@ -25,17 +25,17 @@
 		</button>
 		<div class="collapse navbar-collapse" id="main-navigation">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="categories.html">Catégories</a></li>
-				<li class="nav-item"><a class="nav-link" href="best-sellers.html">Best-Sellers</a></li>
-				<li class="nav-item"><a class="nav-link" href="recherche.html">Recherche</a></li>
-				<li class="nav-item"><a class="nav-link" href="vendre.html">Vendre</a></li>
+				<li class="nav-item"><a class="nav-link" href="categories.php">Catégories</a></li>
+				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
+				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
+				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
 				<li class="nav-item"><a class="nav-link" href="preconnexion.php">Mes Comptes</a></li>
-				<li class="nav-item"><a class="nav-link" href="panier.html">Panier</a></li>
+				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
 			</ul>
 		</div>
 	</nav>
 
-		<form action="connexion.php" method="post">
+		<form method="post">
 			<div class="form-group row">
 				<label class="col-md-1 col-form-label"></label>
 				<h2>Identifiez-vous</h2>
@@ -66,11 +66,55 @@
 				</div>
 			</div>
 
+
+
+
+
 			<div class="form-group">
 				<label class="col-md-1 col-form-label"></label>
 				<label class="col-md-2 col-form-label">
 					<input type="submit" class="btn btn-primary" value="Identifiez-vous" name="button1">
 				</label>
+
+				<?php
+					session_start();
+			
+			if(isset($_POST['button1'])) {
+				$mail = isset($_POST["mail"])? $_POST["mail"]: "";
+				$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
+				if(!empty($MDP) && !empty($mail)){
+					$servername = "localhost";
+					$username ="root";
+					$password = "";
+					$dbname = "piscinedb2";
+					$sql = "";
+
+					$connection = new mysqli($servername, $username, $password, $dbname);
+
+					if($connection->connect_error) {
+						die("Connection failed: " . $connection->connect_error );
+					}
+
+					$sql = "SELECT * FROM acheteur WHERE (mail = '$mail' AND MDP = '$MDP')";
+					$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+					if(mysqli_num_rows($req) == 1){
+						session_start();
+						$_SESSION['mail'] = $mail;
+						$_SESSION['MDP'] = $MDP; 
+
+						header('Location: ' . "page_compte.php");
+					}
+					else {
+						echo 'Mauvais mail/mot de passe';
+					}
+				}
+				else {
+					echo 'Des champs sont vides';
+				}
+			}
+			?>
+			
 			</div>
 		</form>
 
