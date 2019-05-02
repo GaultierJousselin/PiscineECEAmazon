@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.8.4
+- https://www.phpmyadmin.net
+-
+- Hôte : 127.0.0.1:3306
+- Généré le :  jeu. 02 mai 2019 à 20:20
+- Version du serveur :  5.7.24
+- Version de PHP :  7.2.14
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="piscinedb2" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="livres">
+                CREATE TABLE `livres` (
+                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                  `titre` varchar(255) NOT NULL,
+                  `auteur` varchar(255) NOT NULL,
+                  `annee` year(4) NOT NULL,
+                  `editeur` varchar(255) NOT NULL,
+                  `id_vendeur` int(10) unsigned NOT NULL,
+                  `prix` int(11) NOT NULL,
+                  `photo` varchar(1000) NOT NULL,
+                  `description` varchar(255) NOT NULL,
+                  `quantite` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Base de données :  'piscinedb2'
+    -->
+    <database name="piscinedb2">
+        <!-- Table livres -->
+        <table name="livres">
+            <column name="id">1</column>
+            <column name="titre">Harry Potter</column>
+            <column name="auteur"></column>
+            <column name="annee">0000</column>
+            <column name="editeur"></column>
+            <column name="id_vendeur">0</column>
+            <column name="prix">0</column>
+            <column name="photo">images/hp.jpg
+</column>
+            <column name="description">Orphelin, le jeune Harry Potter peut enfin quitter ses tyranniques oncle et tante Dursley</column>
+            <column name="quantite">1</column>
+        </table>
+        <table name="livres">
+            <column name="id">2</column>
+            <column name="titre">Tchoupi</column>
+            <column name="auteur"></column>
+            <column name="annee">0000</column>
+            <column name="editeur"></column>
+            <column name="id_vendeur">0</column>
+            <column name="prix">0</column>
+            <column name="photo">images/tchoupi.jpg</column>
+            <column name="description">T'choupi est une série de livres de littérature jeunesse créés par Thierry Courtin et publiés par Nathan.</column>
+            <column name="quantite">2</column>
+        </table>
+        <table name="livres">
+            <column name="id">3</column>
+            <column name="titre">Harry Potter 2</column>
+            <column name="auteur"></column>
+            <column name="annee">0000</column>
+            <column name="editeur"></column>
+            <column name="id_vendeur">0</column>
+            <column name="prix">0</column>
+            <column name="photo">images/hp2.jpg</column>
+            <column name="description">L'elfe Dobby a bien tenté d'empêcher Harry de retourner à l'École des Sorciers, frappée d'une terrible malédiction, mais Harry n'est pas près de laisser choir ses amis.</column>
+            <column name="quantite">3</column>
+        </table>
+        <table name="livres">
+            <column name="id">4</column>
+            <column name="titre">Elon Musk</column>
+            <column name="auteur"></column>
+            <column name="annee">0000</column>
+            <column name="editeur"></column>
+            <column name="id_vendeur">0</column>
+            <column name="prix">0</column>
+            <column name="photo">images/em.jpg</column>
+            <column name="description">Elon Reeve Musk, né le 28 juin 1971 à Pretoria, est un entrepreneur, chef d'entreprise et ingénieur d'origine sud-africaine naturalisé canadien en 1988 puis américain en 2002.</column>
+            <column name="quantite">6</column>
+        </table>
+    </database>
+</pma_xml_export>

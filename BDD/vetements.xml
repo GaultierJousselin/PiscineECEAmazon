@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.8.4
+- https://www.phpmyadmin.net
+-
+- Hôte : 127.0.0.1:3306
+- Généré le :  jeu. 02 mai 2019 à 20:20
+- Version du serveur :  5.7.24
+- Version de PHP :  7.2.14
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="piscinedb2" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="vetements">
+                CREATE TABLE `vetements` (
+                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  `titre` varchar(255) NOT NULL,
+                  `id_vendeur` int(10) unsigned NOT NULL,
+                  `genre` varchar(255) NOT NULL,
+                  `type` varchar(255) NOT NULL,
+                  `prix` int(11) NOT NULL,
+                  `photo` varchar(255) NOT NULL,
+                  `description` varchar(255) NOT NULL,
+                  `quantite` int(11) NOT NULL,
+                  `video` varchar(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Base de données :  'piscinedb2'
+    -->
+    <database name="piscinedb2">
+        <!-- Table vetements -->
+        <table name="vetements">
+            <column name="id">1</column>
+            <column name="titre">Nike Janoski - Liège</column>
+            <column name="id_vendeur">5</column>
+            <column name="genre">Homme</column>
+            <column name="type">Chaussures</column>
+            <column name="prix">80</column>
+            <column name="photo">images/janoski_liege.jpg</column>
+            <column name="description">Cette édition vient compléter la gamme de modèles conçus en liège comme la Air Max 90, la Blazer, la Dunk ou bien la Air Force 1. Le upper en liège est paré d'un swoosh noir, de lacets en cuir marron et d'une semelle vulcanisée blanche.</column>
+            <column name="quantite">50</column>
+            <column name="video">0</column>
+        </table>
+        <table name="vetements">
+            <column name="id">2</column>
+            <column name="titre">Robe Addidas</column>
+            <column name="id_vendeur">7</column>
+            <column name="genre">Femme</column>
+            <column name="type">Robe</column>
+            <column name="prix">70</column>
+            <column name="photo">images/robe.jpg</column>
+            <column name="description">Robe De toutes les couleurs</column>
+            <column name="quantite">6</column>
+            <column name="video">0</column>
+        </table>
+    </database>
+</pma_xml_export>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.8.4
+- https://www.phpmyadmin.net
+-
+- Hôte : 127.0.0.1:3306
+- Généré le :  jeu. 02 mai 2019 à 20:20
+- Version du serveur :  5.7.24
+- Version de PHP :  7.2.14
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="piscinedb2" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="musique">
+                CREATE TABLE `musique` (
+                  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+                  `titre` varchar(255) NOT NULL,
+                  `auteur` varchar(255) NOT NULL,
+                  `annee` year(4) NOT NULL,
+                  `producteur` varchar(255) NOT NULL,
+                  `id_vendeur` int(11) NOT NULL,
+                  `album` varchar(255) NOT NULL,
+                  `prix` int(11) NOT NULL,
+                  `photo` varchar(255) NOT NULL,
+                  `description` varchar(255) NOT NULL,
+                  `quantite` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Base de données :  'piscinedb2'
+    -->
+    <database name="piscinedb2">
+        <!-- Table musique -->
+        <table name="musique">
+            <column name="id">1</column>
+            <column name="titre">JJG - Envoles moi</column>
+            <column name="auteur">JJG</column>
+            <column name="annee">1984</column>
+            <column name="producteur">JJG</column>
+            <column name="id_vendeur">2</column>
+            <column name="album">Positif</column>
+            <column name="prix">50</column>
+            <column name="photo">images/envoles.jpg</column>
+            <column name="description">Envole-moi, envole-moi, envole-moi 
+Loin de cette fatalité qui colle à ma peau 
+Envole-moi, envole-moi </column>
+            <column name="quantite">5</column>
+        </table>
+        <table name="musique">
+            <column name="id">2</column>
+            <column name="titre">Dans le port d'Amsterdam</column>
+            <column name="auteur">Jacques Brel</column>
+            <column name="annee">1966</column>
+            <column name="producteur">Brel</column>
+            <column name="id_vendeur">4</column>
+            <column name="album">Amsterdam</column>
+            <column name="prix">30</column>
+            <column name="photo">images/brel.jpg</column>
+            <column name="description">Dans le port d’Amsterdam
+Y a des marins qui chantent
+Les rêves qui les hantent</column>
+            <column name="quantite">4</column>
+        </table>
+    </database>
+</pma_xml_export>
