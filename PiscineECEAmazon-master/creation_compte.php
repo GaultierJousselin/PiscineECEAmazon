@@ -135,36 +135,49 @@
 					$username ="root";
 					$password = "";
 					$dbname = "piscinedb2";
-					$sql = "";
-
+			
 					$connection = new mysqli($servername, $username, $password, $dbname);
 
 					if($connection->connect_error) {
 						die("Connection failed: " . $connection->connect_error);
 					}
 					else {
-						echo "connection successful <br>";
 					}
 
 					if($statut == "acheteur") {
-						$sql = "INSERT INTO acheteur VALUE (0, ' ', '$nom', '$prenom', '$image', '$wallpaper', '$adresse', '$mail', '$MDP', 0)";
-						$page_suivante = "page_compte_acheteur.php";
-					}
-					if($statut == "vendeur") {
-						$sql = "INSERT INTO vendeur VALUE (0, ' ', '$nom', '$prenom', '$image', '$wallpaper', '$adresse', '$mail', '$MDP', 0)";
-						$page_suivante = "page_compte_vendeur.php";
+						$sql1 = "SELECT * FROM acheteur WHERE (mail = '$mail' AND MDP = '$MDP')";
+						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+						if(mysqli_num_rows($req1) == 0){
+							$sql = "INSERT INTO acheteur VALUE (0, ' ', '$nom', '$prenom', '$image', '$wallpaper', '$adresse', '$mail', '$MDP', 0)";
+							$page_suivante = "page_compte_acheteur.php";
+						}
+						else{
+							echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
+						}
 					}
 
-					if($connection->query($sql) === TRUE){
-						session_start();
+					if($statut == "vendeur") {
+
+						$sql1 = "SELECT * FROM vendeur WHERE (mail = '$mail' AND MDP = '$MDP')";
+						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+						if(mysqli_num_rows($req1) == 0){
+							$sql = "INSERT INTO vendeur VALUE (0, ' ', '$nom', '$prenom', '$image', '$wallpaper', '$adresse', '$mail', '$MDP', 0)";
+							$page_suivante = "page_compte_vendeur.php";
+						}
+						else{
+							echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
+						}
+					}
+
+					if($page_suivante == "page_compte_vendeur.php" || $page_suivante == "page_compte_acheteur.php") {
 						$_SESSION['mail'] = $mail;
 						$_SESSION['MDP'] = $MDP; 
-
 						header('Location: ' . $page_suivante);
 					}
 					else {
-						echo 'Erreur dans la création du compte.<br>';
-						echo 'Error: ' . $sql . "<br>" . $connection->error;
+						echo 'Impossible de créer le compte compte.<br>';
 					}
 				}
 				else {
