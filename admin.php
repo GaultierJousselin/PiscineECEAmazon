@@ -21,12 +21,21 @@ session_start();
 	</script>
 </head>
 <body>
-	<?php include 'Navbar.php'; ?>
-	
-	<div class="container container-margin">
-		<br><br><br><br>
-	</div>
-	
-	<?php include 'footer.php'; ?>
+	<nav class="navbar navbar-expand-md">
+		<a class="navbar-brand" href="Accueil.html">Logo</a>
+		<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="main-navigation">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="categories.php">Catégories</a></li>
+				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
+				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
+				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
+				<li class="nav-item"><a class="nav-link" href="compte.php">Mes Comptes</a></li>
+				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
+			</ul>
+		</div>
+	</nav>
 </body>
 </html>
