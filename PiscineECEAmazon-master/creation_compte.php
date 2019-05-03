@@ -16,7 +16,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-md">
-		<a class="navbar-brand" href="Accueil.html">Logo</a>
+		<a class="navbar-brand" href="Accueil.php">Logo</a>
 		<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -26,15 +26,14 @@
 				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
 				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
 				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
-				<li class="nav-item"><a class="nav-link" href="preconnexion.php">Mon Compte</a></li>
+				<li class="nav-item"><a class="nav-link" href="compte.php">Mon Compte</a></li>
 				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
 			</ul>
 		</div>
 	</nav>
 
 
-
-	<form method="post">
+		<form action="preconnexion.php" method="post">
 			<div class="form-group row">
 				<label for="mail" class="col-md-1 col-form-label"></label>
 				<h2>Création de votre compte ECE</h2>
@@ -107,85 +106,7 @@
 				<label for="mail" class="col-md-1 col-form-label"></label>
 				<label><input type="submit" class="btn btn-primary" value="Inscription" name="button1"></label>
 				<input type="reset" class="btn btn-primary" value="Effacer" name="button2">
-			</div>
-
-			<?php
-
-			$mail = isset($_POST["mail"])? $_POST["mail"]: "";
-			$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
-			$nom = isset($_POST["nom"])? $_POST["nom"]: "";
-			$prenom = isset($_POST["prenom"])? $_POST["prenom"]: "";
-			$adresse = isset($_POST["adresse"])? $_POST["adresse"]: "";
-			$image = isset($_POST["image"])? $_POST["image"]: "";
-			$wallpaper= isset($_POST["wallpaper"])? $_POST["wallpaper"]: "";
-			$statut = isset($_POST["statut"])? $_POST["statut"]: "";
-
-			if(!empty($_SESSION)) {
-				if($_SESSION['statut'] == "acheteur") {
-					header('Location: '. 'page_compte_acheteur.php');
-				}
-				if($_SESSION['statut'] == "vendeur") {
-					header('Location: '. 'page_compte_vendeur.php');
-				}
-			}
-
-			if(isset($_POST['button1']) && empty($_SESSION) ) {
-				if(!empty($MDP) && !empty($mail) && !empty($nom) && !empty($prenom) && !empty($adresse)) {
-					$servername = "localhost";
-					$username ="root";
-					$password = "";
-					$dbname = "piscinedb2";
-			
-					$connection = new mysqli($servername, $username, $password, $dbname);
-
-					if($connection->connect_error) {
-						die("Connection failed: " . $connection->connect_error);
-					}
-					else {
-					}
-
-					if($statut == "acheteur") {
-						$sql1 = "SELECT * FROM acheteur WHERE (mail = '$mail' AND MDP = '$MDP')";
-						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
-
-						if(mysqli_num_rows($req1) == 0){
-							$sql = "INSERT INTO acheteur VALUE (0, ' ', '$nom', '$prenom', '$image', '$wallpaper', '$adresse', '$mail', '$MDP', 0)";
-							$page_suivante = "page_compte_acheteur.php";
-						}
-						else{
-							echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
-						}
-					}
-
-					if($statut == "vendeur") {
-
-						$sql1 = "SELECT * FROM vendeur WHERE (mail = '$mail' AND MDP = '$MDP')";
-						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
-
-						if(mysqli_num_rows($req1) == 0){
-							$sql = "INSERT INTO vendeur VALUE (0, ' ', '$nom', '$prenom', '$image', '$wallpaper', '$adresse', '$mail', '$MDP', 0)";
-							$page_suivante = "page_compte_vendeur.php";
-						}
-						else{
-							echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
-						}
-					}
-
-					if($page_suivante == "page_compte_vendeur.php" || $page_suivante == "page_compte_acheteur.php") {
-						$_SESSION['mail'] = $mail;
-						$_SESSION['MDP'] = $MDP; 
-						header('Location: ' . $page_suivante);
-					}
-					else {
-						echo 'Impossible de créer le compte compte.<br>';
-					}
-				}
-				else {
-					echo 'Des champs sont vides';
-				}
-			}
-
-		?>
+			</div>		
 		
  	</form>
 

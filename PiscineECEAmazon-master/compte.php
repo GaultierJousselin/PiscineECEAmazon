@@ -16,7 +16,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-md">
-		<a class="navbar-brand" href="Accueil.html">Logo</a>
+		<a class="navbar-brand" href="Accueil.php">Logo</a>
 		<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -26,13 +26,14 @@
 				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
 				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
 				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
-				<li class="nav-item"><a class="nav-link" href="preconnexion.php">Mon Compte</a></li>
+				<li class="nav-item"><a class="nav-link" href="compte.php">Mon Compte</a></li>
 				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
 			</ul>
 		</div>
 	</nav>
 
 		<form method="post">
+			<br><br>
 			<div class="form-group row">
 				<label class="col-md-1 col-form-label"></label>
 				<h2>Identifiez-vous</h2>
@@ -40,10 +41,7 @@
 			<div class="form-group">
 				<div class="form-group row">
 					<label class="col-md-1 col-form-label"></label>
-					<label for="mail" class="col-md-4 col-form-label">Adresse e-mail</label>
-				</div>
-				<div class="form-group row">
-					<label class="col-md-1 col-form-label"></label>
+					<label for="mail" class="col-md-2 col-form-label">Adresse e-mail</label>
 					<div class="col-md-4">
 						<input type="text" class="form-control" name="mail" placeholder="@edu.ece.fr" />
 					</div>
@@ -53,10 +51,7 @@
 			<div class="form-group">
 				<div class="form-group row">
 					<label class="col-md-1 col-form-label"></label>
-					<label for="MDP" class="col-md-4 col-form-label">Mot de passe</label>
-				</div>
-				<div class="form-group row">
-					<label class="col-md-1 col-form-label"></label>
+					<label for="MDP" class="col-md-2 col-form-label">Mot de passe</label>
 					<div class="col-md-4">
 						<input type="password" class="form-control" name="MDP"/>
 					</div>
@@ -67,6 +62,7 @@
 				<label class="col-md-1 col-form-label"></label>
 				<label class="col-md-2 col-form-label">
 					<input type="submit" class="btn btn-primary" value="Identifiez-vous" name="button1">
+					<br><br><br><br><br><br>
 				</label>
 
 				<?php
@@ -89,7 +85,7 @@
 								die("Connection failed: " . $connection->connect_error );
 							}
 
-							$sql1 = "SELECT * FROM acheteur WHERE (mail = '$mail' AND MDP = '$MDP')";
+							$sql1 = "SELECT * FROM acheteur WHERE (mail = '$mail' AND mdp = '$MDP')";
 							$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 							if(mysqli_num_rows($req1) == 1){
@@ -98,25 +94,31 @@
 								$_SESSION['MDP'] = $MDP; 
 								$_SESSION['statut'] = "acheteur";
 
+								while($data = mysqli_fetch_assoc($req1)) { 
+									$_SESSION['ID'] = $data['id'];
+								}
+
 								header('Location: ' . "page_compte_acheteur.php");
 							}
 							else {
-								echo 'Mauvais mail/mot de passe';
-							}
+								$sql2 = "SELECT * FROM vendeur WHERE (mail = '$mail' AND mdp = '$MDP')";
+								$req2 = mysqli_query($connection, $sql2) or die ("Message d'erreur: " . mysqli_error($connection) );
 
-							$sql2 = "SELECT * FROM vendeur WHERE (mail = '$mail' AND MDP = '$MDP')";
-							$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+								if(mysqli_num_rows($req2) == 1){
+									session_start();
+									$_SESSION['mail'] = $mail;
+									$_SESSION['MDP'] = $MDP; 
+									$_SESSION['statut'] = "vendeur";
 
-							if(mysqli_num_rows($req2) == 1){
-								session_start();
-								$_SESSION['mail'] = $mail;
-								$_SESSION['MDP'] = $MDP; 
-								$_SESSION['statut'] = "vendeur";
+									while($data = mysqli_fetch_assoc($req2)) { 
+										$_SESSION['ID'] = $data['id'];
+									}
 
-								header('Location: ' . "page_compte_vendeur.php");
-							}
-							else {
-								echo 'Mauvais mail/mot de passe';
+									header('Location: ' . "page_compte_vendeur.php");
+								}
+								else {
+									echo 'Mauvais mail/mot de passe';
+								}
 							}
 						}
 						else {
@@ -135,6 +137,179 @@
 					<input type="submit" class ="btn btn-primary" value="Créez un compte" name="button2">
 				</label>			
 			</div>
-		</form>
+		</form>	
 </body>
+
+<footer>
+	<form method="post">
+		<div class="form-group">
+			<label class="col-md-1 col-form-label"></label>
+			<label class="col-md-2 col-form-label">Vous possédez un compte administrateur ?</label>
+			<label class="col-md-2 col-form-label">
+				<input type="submit" class ="btn btn-primary" value="Connectez-vous" name="button3">
+			</label>
+			<label class="col-md-2 col-form-label">
+				<input type="submit" class ="btn btn-primary" value="Faire la demande de compte" name="button4">
+			</label>				
+		</div>
+		<?php
+			//Affichage du champs de connexion pour un administrateur
+			if(isset($_POST['button3'])) {
+				echo ' 
+				<div class="form-group row">
+					<label class="col-md-1 col-form-label"></label>
+					<label for="mail_admin" class="col-md-2 col-form-label">Adresse e-mail administrateur</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="mail_admin" placeholder="@edu.ece.fr" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-md-1 col-form-label"></label>
+					<label for="MDP_admin" class="col-md-2 col-form-label">Mot de passe administrateur</label>
+					<div class="col-md-4">
+						<input type="password" class="form-control" name="MDP_admin"/>
+					</div>
+				</div> 
+				<div class="form-group row">
+					<label class="col-md-1 col-form-label"></label>
+					<label class="col-md-2 col-form-label">
+						<input type="submit" class ="btn btn-primary" value="Connexion" name="button5">
+					</label> 
+				</div>';
+			}
+
+			//Affichage des champs de demande de création de compte pour un administrateur
+			if(isset($_POST['button4'])) {
+				echo ' 
+				<div class="form-group row">
+					<label class="col-md-1 col-form-label"></label>
+					<label for="nom" class="col-md-2 col-form-label" placeholder="Nom">Nom & Prénom</label>
+					<div class="col-md-1">
+						<input type="text" class="form-control" name="nom"/>
+					</div>
+					<label for="prenom" class="col-form-label" placeholder="prenom"></label>
+					<div class="col-md-1">
+						<input type="text" class="form-control" name="prenom"/>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-md-1 col-form-label"></label>
+					<label for="mail" class="col-md-2 col-form-label">Adresse e-mail administrateur</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="mail" placeholder="@edu.ece.fr" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-md-1 col-form-label"></label>
+					<label for="MDP" class="col-md-2 col-form-label">Mot de passe administrateur</label>
+					<div class="col-md-4">
+						<input type="password" class="form-control" name="MDP"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-md-1 col-form-label"></label>
+					<label class="col-md-2 col-form-label">
+						<input type="submit" class ="btn btn-primary" value="Envoyer la demande" name="button6">
+					</label> 
+				</div>';
+			}
+
+			//Connexion pour un compte admin
+			if(isset($_POST['button5'])) {
+				$mail = isset($_POST["mail_admin"])? $_POST["mail_admin"]: "";
+				$MDP = isset($_POST["MDP_admin"])? $_POST["MDP_admin"]: "";
+				if(!empty($MDP) && !empty($mail)){
+					$servername = "localhost";
+					$username ="root";
+					$password = "";
+					$dbname = "piscinedb2";
+					$sql1 = "";
+
+					$connection = new mysqli($servername, $username, $password, $dbname);
+
+					if($connection->connect_error) {
+						die("Connection failed: " . $connection->connect_error );
+					}
+
+					$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND mdp = '$MDP')";
+					$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+					while($data = mysqli_fetch_assoc($req1)) { 
+							$_SESSION['accepte'] = $data['accepte'];
+					}
+
+					if(mysqli_num_rows($req1) == 1 && $_SESSION['accepte']== 1){
+						session_start();
+						$_SESSION['mail'] = $mail;
+						$_SESSION['MDP'] = $MDP; 
+						$_SESSION['statut'] = "admin";
+
+						header('Location: '. 'page_compte_admin.php');
+						while($data = mysqli_fetch_assoc($req1)) { 
+							$_SESSION['ID'] = $data['id'];
+						}
+					}
+					else {
+						if(mysqli_num_rows($req1) != 1) {
+							echo 'Mauvais mail/mot de passe';
+						}
+						if($_SESSION['accepte'] != 1) {
+							echo 'Compte en attente de validation par un autre administrateur';
+						}
+
+					}
+				}
+				else {
+					echo 'Des champs sont vides';
+				}
+			}
+
+			//Envoie de la demande création de compte aux administrateurs
+			if($_POST['button6']){
+				$mail = isset($_POST["mail"])? $_POST["mail"]: "";
+				$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
+				$nom = isset($_POST["nom"])? $_POST["nom"]: "";
+				$prenom = isset($_POST["prenom"])? $_POST["prenom"]: "";
+			
+				if(isset($_POST['button6']) && empty($_SESSION) ) {
+					if(!empty($MDP) && !empty($mail) && !empty($nom) && !empty($prenom)) {
+						$servername = "localhost";
+						$username ="root";
+						$password = "";
+						$dbname = "piscinedb2";
+			
+						$connection = new mysqli($servername, $username, $password, $dbname);
+
+						if($connection->connect_error) {
+							die("Connection failed: " . $connection->connect_error);
+						}
+
+						$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND MDP = '$MDP')";
+						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+						if(mysqli_num_rows($req1) == 0){
+							$sql = "INSERT INTO admin VALUE (0, '$nom', '$prenom', ' ', ' ', ' ', '$mail', '$MDP', 0)";
+							$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+							echo 'Une demande de création de compte a bien été envoyé aux administrateurs.<br> Veuillez patienter en attendant leur réponse. Merci.';
+						}
+						else{
+							echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
+						}
+					}
+					else {
+						echo 'Impossible de créer le compte compte.<br>';
+					}
+				}
+				else {
+					echo 'Des champs sont vides';
+				}
+			}
+		?>
+	</form>
+</footer>
 </html>
+
+

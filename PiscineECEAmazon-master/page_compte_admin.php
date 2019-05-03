@@ -33,15 +33,19 @@
 	</nav>
 	
 	<div class="col-md-12">
-		<h2>Votre compte marchand</h2>
+		<h2>Votre compte Administrateur</h2>
 		<div class="row">
 			<div class="col-md-1"></div>
+			<div class="col-md-1">
+				
+			</div>
+
 			<div class="col-md-11">
 				<!--affichage des ID de connexion de la session en cours-->
 				<?php
 				session_start();
 
-				if(isset($_SESSION['mail']) && isset($_SESSION['MDP'])) {
+				if(!empty($_SESSION['mail']) && !empty($_SESSION['MDP'])) {
 					$servername = "localhost";
 					$username ="root";
 					$password = "";
@@ -54,7 +58,7 @@
 						die("Connection failed: " . $connection->connect_error);
 					}
 
-					$sql = "SELECT * FROM vendeur WHERE (mail = '" . $_SESSION['mail'] . "' AND MDP = '" . $_SESSION['MDP'] . "')";
+					$sql = "SELECT * FROM admin WHERE (mail = '" . $_SESSION['mail'] . "' AND MDP = '" . $_SESSION['MDP'] . "')";
 					$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 						while($data = mysqli_fetch_assoc($req)) { 

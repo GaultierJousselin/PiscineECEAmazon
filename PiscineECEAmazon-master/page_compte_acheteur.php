@@ -16,7 +16,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-md">
-		<a class="navbar-brand" href="Accueil.html">Logo</a>
+		<a class="navbar-brand" href="Accueil.php">Logo</a>
 		<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -26,7 +26,7 @@
 				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
 				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
 				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
-				<li class="nav-item"><a class="nav-link" href="preconnexion.php">Mon Compte</a></li>
+				<li class="nav-item"><a class="nav-link" href="compte.php">Mon Compte</a></li>
 				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
 			</ul>
 		</div>
@@ -58,6 +58,7 @@
 					$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 						while($data = mysqli_fetch_assoc($req)) { 
+							echo "ID: ". $data['id']. '<br>';
 							echo "Nom: ". $data['nom']. '<br>';
 							echo "Prénom: ". $data['prenom']. '<br>';
 							echo "Mail: ". $data['mail']. '<br>';
