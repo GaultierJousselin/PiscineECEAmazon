@@ -2,13 +2,14 @@
 //On demarre la sessions avant toute chose.
 session_start();
 
+include 'global.php';
+
 
 if (isset($_GET['clear']))
 {
 	if (isset($_SESSION['cart']))
 	{
 		$_SESSION['cart'] = [];
-
 	}
 }
 
@@ -44,6 +45,11 @@ if (isset($_GET['clear']))
 			// sendPostRequest("panier.php", "updatePrice=" + newPrice);
 		}
 
+		function goToOrderPage()
+		{
+			window.location.href = "commande.php";
+		}
+
 	</script>
 </head>
 <body>
@@ -56,17 +62,19 @@ if (isset($_GET['clear']))
 			{
 				$cart = $_SESSION['cart'];
 				$cartSize = count($cart);
-				$totalPrice = 0;
+				// $totalPrice = 0;
 
-				for ($i = 0; $i < $cartSize; $i++)
-				{
-					$product = $cart[$i];
-					$totalPrice += $product['valeur_commande'] * $product['quantite'];
-				}
+				// for ($i = 0; $i < $cartSize; $i++)
+				// {
+				// 	$product = $cart[$i];
+				// 	$totalPrice += $product['valeur_commande'] * $product['quantite'];
+				// }
+
+				$totalPrice = getCartTotalPrice();
 
 				echo "<div style='position: fixed; top: 0px; width: 100%; left: 50%; transform: translateX(-50%); padding: 20px; padding-top: 76px; background-color: white'>";
 				echo "<button class='btn btn-danger' onclick='clearCart()'>Vider le panier</button>";
-				echo "<button class='btn btn-success'  style='float:right'>Passer à la commande</button>";
+				echo "<button class='btn btn-success' style='float:right' onclick='goToOrderPage()'>Passer à la commande</button>";
 				echo "<span style='float:right; margin-right: 40px; padding-top: 6px; font-size: 18px; font-weight: bold'>Prix Total: <span id='totalPrice'>".$totalPrice."</span> €</span>";
 				echo "</div>";
 				echo "<br />";

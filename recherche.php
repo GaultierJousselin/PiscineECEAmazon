@@ -7,7 +7,7 @@ include 'global.php';
 if (isset($_POST['add']) && isset($_POST['id']))
 	addToCart($db_handle, $_POST['add'], $_POST['id'], $_POST['quantity']);
 
-$categories = $_GET['cat'];
+$categories = isset($_GET['cat']) ? $_GET['cat'] : NULL;
 if (isset($categories)) {
 	$categories = explode(',', $categories);
 }
@@ -66,17 +66,21 @@ $search = $_GET['search'];
 					{
 						while ($value = mysqli_fetch_assoc($result2)) 
 						{
-							$cart = $_SESSION['cart'];
-							$cartSize = count($cart);
 							$alreadyInCart = false;
-
-							for ($i = 0; $i < $cartSize; $i++)
+							
+							if (isset($_SESSION['cart']))
 							{
-								$product = $cart[$i];
-								if ($product['cat'] == $cat && $product['id_produit'] == $value['id'])
+								$cart = $_SESSION['cart'];
+								$cartSize = count($cart);
+	
+								for ($i = 0; $i < $cartSize; $i++)
 								{
-									$alreadyInCart = true;
-									break;
+									$product = $cart[$i];
+									if ($product['cat'] == $cat && $product['id_produit'] == $value['id'])
+									{
+										$alreadyInCart = true;
+										break;
+									}
 								}
 							}
 

@@ -54,4 +54,23 @@ function addToCart($db_handle, $catInput, $idInput, $quantityInput)
 	}
 }
 
+function getCartTotalPrice()
+{
+	$totalPrice = 0;
+	
+	if (isset($_SESSION['cart']) && count($_SESSION['cart']) != 0)
+	{
+		$cart = $_SESSION['cart'];
+		$cartSize = count($cart);
+
+		for ($i = 0; $i < $cartSize; $i++)
+		{
+			$product = $cart[$i];
+			$totalPrice += $product['valeur_commande'] * $product['quantite'];
+		}
+	}
+
+	return $totalPrice;
+}
+
 ?>

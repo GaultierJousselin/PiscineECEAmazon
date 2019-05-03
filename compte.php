@@ -2,6 +2,11 @@
 //On demarre la sessions avant toute chose.
 session_start();
 
+if (isset($_SESSION['ID']))
+{
+	header("location: page_compte_".$_SESSION['statut'].".php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,8 +62,6 @@ session_start();
 					</label>
 
 					<?php
-						session_start();
-				
 						if(isset($_POST['button1'])) {
 							$mail = isset($_POST["mail"])? $_POST["mail"]: "";
 							$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
@@ -80,7 +83,6 @@ session_start();
 								$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 								if(mysqli_num_rows($req1) == 1){
-									session_start();
 									$_SESSION['mail'] = $mail;
 									$_SESSION['MDP'] = $MDP; 
 									$_SESSION['statut'] = "acheteur";
@@ -89,6 +91,12 @@ session_start();
 										$_SESSION['ID'] = $data['id'];
 									}
 
+									if (isset($_SESSION['oldPage']) && $_SESSION['oldPage'] != "none")
+									{
+										$page = $_SESSION['oldPage']; 
+										$_SESSION['oldPage'] = "none";
+										echo "<script>window.location.href='".$page."';</script>";
+									}
 									//header('Location: ' . "page_compte_acheteur.php");
 									echo "<script>window.location.href='page_compte_acheteur.php';</script>";
 								}
@@ -97,7 +105,6 @@ session_start();
 									$req2 = mysqli_query($connection, $sql2) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 									if(mysqli_num_rows($req2) == 1){
-										session_start();
 										$_SESSION['mail'] = $mail;
 										$_SESSION['MDP'] = $MDP; 
 										$_SESSION['statut'] = "vendeur";
@@ -232,7 +239,6 @@ session_start();
 						}
 
 						if(mysqli_num_rows($req1) == 1 && $_SESSION['accepte']== 1){
-							session_start();
 							$_SESSION['mail'] = $mail;
 							$_SESSION['MDP'] = $MDP; 
 							$_SESSION['statut'] = "admin";
@@ -258,7 +264,7 @@ session_start();
 				}
 
 				//Envoie de la demande création de compte aux administrateurs
-				if($_POST['button6']){
+				if(isset($_POST['button6'])){
 					$mail = isset($_POST["mail"])? $_POST["mail"]: "";
 					$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
 					$nom = isset($_POST["nom"])? $_POST["nom"]: "";

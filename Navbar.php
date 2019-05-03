@@ -61,7 +61,9 @@ include 'connect.php';
 			<li class="nav-item">
 				<a class="nav-link" href="vendre.php">Vendre</a>
 			</li><li class="nav-item">
-				<a class="nav-link" href="compte.php">Mes Comptes</a>
+				<?php
+					echo "<a class=\"nav-link\" href=\"compte.php\">".(isset($_SESSION['ID']) ? "Mon Compte" : "Me connecter")."</a>";
+				?>
 			</li><li class="nav-item">
 				<?php
 					$cart_size = 0;
