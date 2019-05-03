@@ -47,6 +47,8 @@ function addToCart($db_handle, $catInput, $idInput, $quantityInput)
 		$_SESSION['cart'][] = $parsedData;
 
 
+		print_r($_SESSION['cart']);
+
 		// $sql = "INSERT INTO `commandes` (`id_produit`, `id_acheteur`, `id_vendeur`, `quantite`, `valeur_commande`, `bought`, `nbr_commande`, `cat`) VALUES ('".$id."', '".$user_id."', '".$data['id_vendeur']."', '".$quantity."', '".intval($data['prix'])."', '0', '".$command."', '".$cat."')";
 		// $res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
 	}
