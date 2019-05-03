@@ -71,7 +71,7 @@ session_start();
 				$mail = isset($_POST["mail"])? $_POST["mail"]: "";
 				$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
 				if(!empty($MDP) && !empty($mail)){
-					$servername = "localhost";
+					$servername = "localhost:8888";
 					$username ="root";
 					$password = "root";
 					$dbname = "piscinedb2";
