@@ -2,13 +2,13 @@
 
 include 'connect.php';
 
-function addToCart($catInput, $idInput)
+function addToCart($db_handle, $catInput, $idInput, $quantityInput)
 {
 	$cat = htmlspecialchars($catInput);
 	$id = intval($idInput);
 	$quantity = 1;
-	if (isset($_GET['quantity']))
-		$quantity = intval($_GET['quantity']);
+	if (isset($quantityInput))
+		$quantity = $quantityInput;
 
 	if ($quantity < 1)
 		$quantity = 1;
@@ -18,21 +18,37 @@ function addToCart($catInput, $idInput)
 	$sql = "SELECT * FROM `".$cat."` WHERE `id`='".$id."'";
 	$result = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
 
-	if ($mysqli_num_rows($result) == 1)
+	if (mysqli_num_rows($result) == 1)
 	{
 		//$user_id = $_SESSION['id'];
 		$user_id = 0;
+		$data = mysqli_fetch_assoc($result);
 		
-		$sql = "SELECT * FROM `commandes` WHERE `id_acheteur`='".$user_id."' AND `bought`='false'";
+		$sql = "SELECT `nbr_commande` FROM `commandes` WHERE `id_acheteur`='".$user_id."' AND `bought`='0'";
 		$result2 = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
+		$data2 = mysqli_fetch_assoc($result2);
 
-		$command = intval($user_id."".time()."".mt_rand(0, 100));
+		$command = intval($user_id."".time());
+		
+		if (mysqli_num_rows($result2) != 0)
+			$command = intval($data2['nbr_commande']);
+		
+		$parsedData = array(
+			"id_produit" => $id,
+			"id_acheteur" => $user_id,
+			"id_vendeur" => $data['id_vendeur'],
+			"quantite" => $quantity,
+			"valeur_commande" => intval($data['prix']),
+			"bought" => '0',
+			"nbr_commande" => $command,
+			"cat" => $cat
+		);
 
-		if (mysqli_num_rows($result2) == 0)
-			$command = mysqli_fetch_assoc($result2)['numero_commande'];
+		$_SESSION['cart'][] = $parsedData;
 
-		$sql = "INSERT INTO `commandes` (`id_produit`, `id_acheteur`, `id_vendeur`, `quantite`, `valeur_commande`, `bought`, `numero_commande`, `cat`) VALUES ('".$id."', '".$user_id."', '".$result['id_vendeur']."', '".$quantity."', '".$result['prix']."', 'false', '".$command."', '".$cat."');";
-		$res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
+
+		// $sql = "INSERT INTO `commandes` (`id_produit`, `id_acheteur`, `id_vendeur`, `quantite`, `valeur_commande`, `bought`, `nbr_commande`, `cat`) VALUES ('".$id."', '".$user_id."', '".$data['id_vendeur']."', '".$quantity."', '".intval($data['prix'])."', '0', '".$command."', '".$cat."')";
+		// $res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
 	}
 }
 

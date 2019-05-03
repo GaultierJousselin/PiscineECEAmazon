@@ -44,7 +44,7 @@
 				if(isset($_SESSION['mail']) && isset($_SESSION['MDP'])) {
 					$servername = "localhost";
 					$username ="root";
-					$password = "root";
+					$password = "";
 					$dbname = "piscinedb2";
 					$sql = "";
 

@@ -12,7 +12,7 @@
 		if(!empty($MDP) && !empty($mail)){
 			$servername = "localhost";
 			$username ="root";
-			$password = "root";
+			$password = "";
 			$dbname = "piscinedb2";
 			$sql = "";
 

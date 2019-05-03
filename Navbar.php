@@ -1,3 +1,8 @@
+<?php
+
+include 'connect.php';
+
+?>
 <script>
 	function search(value)
 	{
@@ -58,7 +63,14 @@
 			</li><li class="nav-item">
 				<a class="nav-link" href="compte.php">Mes Comptes</a>
 			</li><li class="nav-item">
-				<a class="nav-link" href="panier.php">Panier</a>
+				<?php
+					$cart_size = 0;
+					if (isset($_SESSION['cart']))
+						$cart_size = count($_SESSION['cart']);
+					if ($cart_size == 0)
+						$cart_size = "Vide";
+					echo "<a class=\"nav-link\" href=\"panier.php\">Panier (<span id=\"cart_size\">".$cart_size."</span>)</a>";
+				?>
 			</li>
 		</ul>
 	</div>

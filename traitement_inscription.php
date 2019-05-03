@@ -16,7 +16,7 @@
 		if(!empty($MDP) && !empty($mail) && !empty($nom) && !empty($prenom) && !empty($adresse)){
 			$servername = "localhost";
 			$username ="root";
-			$password = "root";
+			$password = "";
 			$dbname = "piscinedb2";
 			$sql = "";
 

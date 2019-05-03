@@ -4,8 +4,8 @@ session_start();
 
 include 'global.php';
 
-if (isset($_GET['add']) && isset($_GET['id']))
-	addToCart($_GET['add'], $_GET['id']);
+if (isset($_POST['add']) && isset($_POST['id']))
+	addToCart($db_handle, $_POST['add'], $_POST['id'], $_POST['quantity']);
 
 $categories = $_GET['cat'];
 if (isset($categories)) {
@@ -23,14 +23,22 @@ $search = $_GET['search'];
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="global.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
+
 	<script type="text/javascript">
 		$(document).ready(function(){	
 			$('.header').height($(window).height());
 		});
 		function addCart(cat, id) {
 			var quantity = document.getElementById('q' + id).value;
-			window.location.href = 'recherche.php?add=' + cat + '&id=' + id + "$quantity=";
+			//window.location.href = 'recherche.php?add=' + cat + '&id=' + id + "$quantity=";
+			sendPostRequest("recherche.php", "add=" + cat + "&id=" + id + "&quantity=" + quantity);
+			var cartCount = document.getElementById("cart_size").innerHTML;
+			document.getElementById("cart_size").innerHTML = "1";
+			if (cartCount != "Vide")
+				document.getElementById("cart_size").innerHTML = parseInt(cartCount) + 1;
+			console.log("Cart size: " + cartCount);
 		}
 	</script>
 </head>
