@@ -30,15 +30,15 @@ $search = $_GET['search'];
 		$(document).ready(function(){	
 			$('.header').height($(window).height());
 		});
-		function addCart(cat, id) {
-			var quantity = document.getElementById('q' + id).value;
-			//window.location.href = 'recherche.php?add=' + cat + '&id=' + id + "$quantity=";
+		function addCart(e, cat, id) {
+			var quantity = document.getElementById('q' + cat + '' + id).value;
 			sendPostRequest("recherche.php", "add=" + cat + "&id=" + id + "&quantity=" + quantity);
 			var cartCount = document.getElementById("cart_size").innerHTML;
 			document.getElementById("cart_size").innerHTML = "1";
 			if (cartCount != "Vide")
 				document.getElementById("cart_size").innerHTML = parseInt(cartCount) + 1;
 			console.log("Cart size: " + cartCount);
+			e.target.disabled = true;
 		}
 	</script>
 </head>
@@ -56,18 +56,30 @@ $search = $_GET['search'];
 					continue;
 				}
 
-				// echo "<strong>".$name.":</strong><br>";
-
 				if (isset($search))
 				{
-
 					$keywords = mysqli_real_escape_string($db_handle, htmlspecialchars($search));
 					$sql = "SELECT * FROM `".$cat."` WHERE `titre` LIKE '%".$keywords."%'";
 					$result2 = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
 					
 					if (mysqli_num_rows($result2) > 0)
 					{
-						while ($value = mysqli_fetch_assoc($result2)) {
+						while ($value = mysqli_fetch_assoc($result2)) 
+						{
+							$cart = $_SESSION['cart'];
+							$cartSize = count($cart);
+							$alreadyInCart = false;
+
+							for ($i = 0; $i < $cartSize; $i++)
+							{
+								$product = $cart[$i];
+								if ($product['cat'] == $cat && $product['id_produit'] == $value['id'])
+								{
+									$alreadyInCart = true;
+									break;
+								}
+							}
+
 							echo "<hr />";
 							echo "<div class='container'>";
 							echo "	<table class='product_table_search'><tbody>";
@@ -89,14 +101,14 @@ $search = $_GET['search'];
 							echo "					<br />";
 							echo "					<div class='form-group'>";
 							echo "					<div style='position: relative;'>";
-							echo "						<select id='q".$value['id']."' class='form-control' style='width:60px; position: absolute'>";
+							echo "						<select id='q".$cat."".$value['id']."' class='form-control' style='width:60px; position: absolute'>";
 							echo "							<option>1</option>";
 							echo "							<option>2</option>";
 							echo "							<option>3</option>";
 							echo "							<option>4</option>";
 							echo "							<option>5</option>";
 							echo "						</select>";
-							echo "						<button onclick='addCart(\"".$cat."\", ".$value['id'].")'' type='button' class='btn btn-success' style='position: absolute; left: 70px'>Ajouter à mon panier</button><br />";
+							echo "						<button onclick='addCart(event, \"".$cat."\", ".$value['id'].")'' type='button' class='btn btn-success' style='position: absolute; left: 70px' ".($alreadyInCart ? "disabled" : "").">Ajouter à mon panier</button><br />";
 							echo "					</div>";
 							echo "					<br />";
 							echo "				</td>";
@@ -104,8 +116,6 @@ $search = $_GET['search'];
 							echo "		</div>";
 							echo "	</tbody></table>";
 							echo "</div>";
-
-
 							echo "<br />";
 							$results++;
 						}
