@@ -162,7 +162,7 @@ if(isset($categories)){
 							echo "		<div class='row'>";
 							echo "			<tr class='col-md-2'>";
 							echo "				<td>";
-							echo "					<strong>".$value['titre']."</strong>";
+							echo "					<strong><a href='produit.php?cat=".$cat."&id=".$value['id']."'>".$value['titre']."</strong>";
 							echo "				</td>";
 							echo "			</tr>";
 							echo "		</div>";
@@ -197,18 +197,6 @@ if(isset($categories)){
 						}
 					}
 				}
-				
-
-				// echo "<br />";
-
-				/*
-				if (isset($categories)) {
-					foreach ($categories as $row => $elem) {
-						if (!strcmp($name, $elem)) {
-							echo "X ";	
-						}
-					}
-				}*/
 			}
 			
 
@@ -248,7 +236,7 @@ if(isset($categories)){
 							echo "		<div class='row'>";
 							echo "			<tr class='col-md-2'>";
 							echo "				<td>";
-							echo "					<strong>".$value['titre']."</strong>";
+							echo "					<strong><a href='produit.php?cat=".$cat."&id=".$value['id']."'>".$value['titre']."</strong>";
 							echo "				</td>";
 							echo "			</tr>";
 							echo "		</div>";

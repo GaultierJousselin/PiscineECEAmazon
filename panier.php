@@ -126,7 +126,7 @@ if (isset($_SESSION['cart']))
 					echo "<div class='container-fluid'>";
 					echo "		<div class='row'>";
 					echo "			<div class='col-lg'>";
-					echo "				<strong>".$data['titre']."</strong><br /><br />";
+					echo "				<a href=produit.php?cat=".$cat."&id=".$data['id']."><strong>".$data['titre']."</strong></a><br /><br />";
 					echo "				<img src=".$data['photo']." alt='nous n avons pas trouvé' width= '100px'>";
 					echo "			</div>";
 					echo "			<div class='col col-lg-3'>";
