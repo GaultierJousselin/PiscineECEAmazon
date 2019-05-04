@@ -7,7 +7,7 @@
 					ECE Amazon est une entreprise de commerce électronique française basée à Paris. Elle est un des géants du Web Parisien, regroupés sous l'acronyme GAFFE.
 				</p>
 				<p>
-					Cette entreprise est gérée par trois jeunes ingénieurs fraichement sortient de l'ecole ECE Paris. 
+					Cette entreprise est gérée par trois jeunes ingénieurs fraichement sorti de l'ecole ECE Paris. 
 				</p>
 			</div>
 			<div class="col-lg-4 col-md-4 col-sm-12">
@@ -20,6 +20,6 @@
 				</p>
 			</div>
 		</div>
-		<div class="footer-copyright text-center">&copy; 2019 Copyright | Droit d'auteur: Jousselin Gaultier</div>
+		<div class="footer-copyright text-center">&copy; 2019 Copyright | Droit d'auteur: Jousselin Gaultier Paul Ghazal Marko Arsovic</div>
 	</div>
 </div> 

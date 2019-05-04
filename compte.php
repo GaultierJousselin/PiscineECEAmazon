@@ -21,10 +21,8 @@ session_start();
 	</head>
 	<body>
 		<?php include 'Navbar.php'; ?>
-
 		<div class="container container-margin">
 			<form method="post">
-				<br><br>
 				<div class="form-group row">
 					<label class="col-md-1 col-form-label"></label>
 					<h2>Identifiez-vous</h2>
@@ -53,12 +51,13 @@ session_start();
 					<label class="col-md-1 col-form-label"></label>
 					<label class="col-md-2 col-form-label">
 						<input type="submit" class="btn btn-primary" value="Identifiez-vous" name="button1">
-						<br><br><br><br><br><br>
+						<br><br><br>
 					</label>
 
 					<?php
 						session_start();
-				
+						
+						//Connexion pour un acheteur / vendeur
 						if(isset($_POST['button1'])) {
 							$mail = isset($_POST["mail"])? $_POST["mail"]: "";
 							$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
@@ -89,7 +88,6 @@ session_start();
 										$_SESSION['ID'] = $data['id'];
 									}
 
-									//header('Location: ' . "page_compte_acheteur.php");
 									echo "<script>window.location.href='page_compte_acheteur.php';</script>";
 								}
 								else {
@@ -106,7 +104,6 @@ session_start();
 											$_SESSION['ID'] = $data['id'];
 										}
 
-										//header('Location: ' . "page_compte_vendeur.php");
 										echo "<script>window.location.href='page_compte_vendeur.php';</script>";
 									}
 									else {
@@ -142,6 +139,7 @@ session_start();
 					<input type="submit" class ="btn btn-primary" value="Faire la demande de compte" name="button4">
 				</label>				
 			</div>
+
 			<?php
 				//Affichage du champs de connexion pour un administrateur
 				if(isset($_POST['button3'])) {
@@ -175,11 +173,11 @@ session_start();
 					<div class="form-group row">
 						<label class="col-md-1 col-form-label"></label>
 						<label for="nom" class="col-md-2 col-form-label" placeholder="Nom">Nom & Prénom</label>
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<input type="text" class="form-control" name="nom"/>
-						</div>
+						</div>e
 						<label for="prenom" class="col-form-label" placeholder="prenom"></label>
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<input type="text" class="form-control" name="prenom"/>
 						</div>
 					</div>
@@ -237,7 +235,7 @@ session_start();
 							$_SESSION['MDP'] = $MDP; 
 							$_SESSION['statut'] = "admin";
 
-							header('Location: '. 'page_compte_admin.php');
+							echo "<script>window.location.href='page_compte_admin.php';</script>";
 							while($data = mysqli_fetch_assoc($req1)) { 
 								$_SESSION['ID'] = $data['id'];
 							}
