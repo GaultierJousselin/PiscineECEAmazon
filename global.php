@@ -28,10 +28,10 @@ function addToCart($db_handle, $catInput, $idInput, $quantityInput)
 		$result2 = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
 		$data2 = mysqli_fetch_assoc($result2);
 
-		$command = intval($user_id."".time());
+		$command = $user_id."".time();
 		
-		if (mysqli_num_rows($result2) != 0)
-			$command = intval($data2['nbr_commande']);
+		if (isset($_SESSION['cart']) && count($_SESSION['cart']) != 0)
+			$command = $_SESSION['cart'][0]['nbr_commande'];
 		
 		$parsedData = array(
 			"id_produit" => $id,

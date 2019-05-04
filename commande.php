@@ -15,7 +15,6 @@ if (!isset($_SESSION['ID']))
 
 $user_id = $_SESSION['ID'];
 
-
 // $sql = "SELECT * FROM `acheteur` WHERE `id`=$user_id";
 $sql = "SELECT * FROM `acheteur` WHERE `id`='".$user_id."'";
 $result = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
@@ -23,17 +22,60 @@ $user = mysqli_fetch_assoc($result);
 
 $cardSaved = !empty($user['CB_nbr']) && !empty($user['CB_name']) && !empty($user['CB_date_expi']) && !empty($user['CB_CVC']); 
 
-if (isset($_POST['buy']))
-{
-    if (isset($_POST['save_card']))
-    {
-        $cardNbr = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_nbr']));
-        $cardDate = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_date']));
-        $cardCvc = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_cvc']));
-        $cardName = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_name']));
+$errors = [];
 
-        $sql = "UPDATE `acheteur` SET `CB_nbr`='".$cardNbr."', `CB_name`='".$cardName."', `CB_date_expi`='".$cardDate."', `CB_CVC`='".$cardCvc."' WHERE `id`='".$user_id."'";
-		$res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
+if (isset($_POST['buy']) && isset($_SESSION['cart']) && count($_SESSION['cart']) != 0)
+{
+    $checkoutPrice = getCartTotalPrice();
+    $checkoutNumber = $_SESSION['cart'][0]['nbr_commande'];
+
+    $cardNbr = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_nbr']));
+    $cardDate = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_date']));
+    $cardCvc = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_cvc']));
+    $cardName = mysqli_real_escape_string($db_handle, htmlspecialchars($_POST['card_name']));
+
+    if (!preg_match('/^\d{16}$/', $cardNbr))
+        $errors[] = "Mauvais numéro de carte !";
+    if (!preg_match('/^\d{3,4}$/', $cardCvc))
+        $errors[] = "Mauvais CVC !";
+    if (!preg_match('/^[a-zA-Z-\s]+$/', $cardName))
+        $errors[] = "Mauvais nom !";
+    if (preg_match('/^(\d{2})\/(\d{2})$/', $cardDate, $matches))
+    {
+        $month = intval($matches[1]);
+        $year = intval($matches[2]);
+        if ($month < 1 || $month > 12 || $year < 19 || $year > 25)
+            $errors[] = "Mauvaise date d'expiration !";
+    }
+    else
+        $errors[] = "Mauvaise date d'expiration !";
+
+    if (count($errors) == 0)
+    {
+        if (isset($_POST['save_card']))
+        {
+                $sql = "UPDATE `acheteur` SET `CB_nbr`='".$cardNbr."', `CB_name`='".$cardName."', `CB_date_expi`='".$cardDate."', `CB_CVC`='".$cardCvc."' WHERE `id`='".$user_id."'";
+                $res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
+        }
+
+        foreach ($_SESSION['cart'] as $row => $elem)
+        {
+            $sql = "INSERT INTO `commandes` (`id_produit`, `id_acheteur`, `id_vendeur`, `quantite`, `valeur_commande`, `bought`, `nbr_commande`, `cat`) VALUES 
+                    ('".$elem['id_produit']."', 
+                    '".$elem['id_acheteur']."', 
+                    '".$elem['id_vendeur']."', 
+                    '".$elem['quantite']."', 
+                    '".$elem['valeur_commande']."', 
+                    '1', 
+                    '".$elem['nbr_commande']."', 
+                    '".$elem['cat']."')";
+
+            $res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
+        }
+
+        $_SESSION['cart'] = [];
+
+        header("location: buy_success.php?checkout=".$checkoutNumber."&price=".$checkoutPrice);
     }
 }
 
@@ -61,7 +103,8 @@ if (isset($_POST['buy']))
 	<div class="container container-margin">
 		
         <form action="commande.php" method="POST">
-
+            <h4>Commande n°<?php echo $_SESSION['cart'][0]['nbr_commande']; ?></h4>
+            <br />
             <div class="row">
                 <div class="col-lg-4">
                 <h3>Contact</h3>
@@ -112,40 +155,53 @@ if (isset($_POST['buy']))
                     <hr />
                     <div class="form-group">
                         <label for="card_nbr">Numéro de carte</label>
-                        <input type="text" class="form-control" id="card_nbr" name="card_nbr" placeholder="4242424242424242" value="<?php echo $user['CB_nbr']; ?>">
+                        <input type="text" class="form-control" id="card_nbr" name="card_nbr" placeholder="4242424242424242" value="<?php echo isset($_POST['buy']) ? $cardNbr : $user['CB_nbr']; ?>">
                     </div>
                     <div class="form-group row">
                         <div class="form-group col-lg-6">
                             <label for="card_date">Date d'éxpiration</label>
-                            <input type="text" class="form-control" id="card_date" name="card_date" placeholder="MM/AA" value="<?php echo $user['CB_date_expi']; ?>">
+                            <input type="text" class="form-control" id="card_date" name="card_date" placeholder="MM/AA" value="<?php echo isset($_POST['buy']) ? $cardDate : $user['CB_date_expi']; ?>">
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="card_cvc">CVC</label>
-                            <input type="text" class="form-control" id="card_cvc" name="card_cvc" placeholder="CVC" value="<?php echo $user['CB_CVC']; ?>">
+                            <input type="text" class="form-control" id="card_cvc" name="card_cvc" placeholder="CVC" value="<?php echo isset($_POST['buy']) ? $cardCvc : $user['CB_CVC']; ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="card_name">Nom</label>
-                        <input type="text" class="form-control" id="card_name" name="card_name" placeholder="Nom" value="<?php echo $user['CB_name']; ?>">
+                        <input type="text" class="form-control" id="card_name" name="card_name" placeholder="Nom" value="<?php echo isset($_POST['buy']) ? $cardName : $user['CB_name']; ?>">
                     </div>
                     <div id="save_card_check" class="form-group <?php echo ($cardSaved ? 'd-none' : ''); ?>">
                         <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="save_card" name="save_card">
                         <label class="form-check-label" for="save_card">
-                            Sauvegarder la carte
+                            Sauvegarder ma carte banquaire
+                        </label>
+                        </div>
+                    </div>
+                    <div id="save_card_check" class="form-group <?php echo ($cardSaved ? '' : 'd-none'); ?>">
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="save_card" name="save_card">
+                        <label class="form-check-label" for="save_card">
+                            Mettre à jour ma carte banquaire
                         </label>
                         </div>
                     </div>
                 </div>
             </div>
-
             <hr />
-            <?php
-                echo "<div style=\"float:right\">";
-                echo "<span style=\"margin-right:30px; font-weight:bold\">Prix total: ".getCartTotalPrice()." € TTC</span>";
-                echo "<input type=\"submit\" class=\"btn btn-success\" value=\"Acheter\" name=\"buy\" />";
-                echo "</div>";
-            ?>
+            <div style="float:right">
+                <span style="margin-right:30px; font-weight:bold">Prix total: <?php echo getCartTotalPrice(); ?> € TTC</span>
+                <input type="submit" class="btn btn-success" value="Acheter" name="buy" />
+                <?php
+                    foreach ($errors as $row => $elem)
+                    {
+                        echo "<br /><span class=\"error-msg\">".$elem."</span>";
+                    }
+                ?>
+            </div>
+            <br />
+            <br />
             <br />
             <br />
             <br />

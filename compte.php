@@ -243,7 +243,8 @@ if (isset($_SESSION['ID']))
 							$_SESSION['MDP'] = $MDP; 
 							$_SESSION['statut'] = "admin";
 
-							header('Location: '. 'page_compte_admin.php');
+							// header('Location: '. 'page_compte_admin.php');
+							echo "<script>window.location.href='page_compte_admin.php';</script>";
 							while($data = mysqli_fetch_assoc($req1)) { 
 								$_SESSION['ID'] = $data['id'];
 							}

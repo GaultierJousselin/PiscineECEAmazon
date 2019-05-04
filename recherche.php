@@ -11,7 +11,7 @@ $categories = isset($_GET['cat']) ? $_GET['cat'] : NULL;
 if (isset($categories)) {
 	$categories = explode(',', $categories);
 }
-$search = $_GET['search'];
+$search = isset($_GET['search']) ? $_GET['search'] : NULL;
 ?>
 
 <!DOCTYPE html>
