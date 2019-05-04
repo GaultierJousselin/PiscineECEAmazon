@@ -15,23 +15,10 @@
 	</script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md">
-		<a class="navbar-brand" href="Accueil.php">Logo</a>
-		<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="main-navigation">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="categories.php">Catégories</a></li>
-				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
-				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
-				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
-				<li class="nav-item"><a class="nav-link" href="compte.php">Mon Compte</a></li>
-				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
-			</ul>
-		</div>
-	</nav>
-	
+	<?php include 'Navbar.php'; ?>
+
+		<div class="container container-margin">
+	<br><br><br><br>
 	<div class="col-md-12">
 		<h2>Votre compte Administrateur</h2>
 		<div class="row">
@@ -40,7 +27,7 @@
 				
 			</div>
 
-			<div class="col-md-11">
+			<div class="col-md-12">
 				<!--affichage des ID de connexion de la session en cours-->
 				<?php
 				session_start();
@@ -61,21 +48,85 @@
 					$sql = "SELECT * FROM admin WHERE (mail = '" . $_SESSION['mail'] . "' AND MDP = '" . $_SESSION['MDP'] . "')";
 					$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
 
-						while($data = mysqli_fetch_assoc($req)) { 
-							echo "ID: ". $data['id']. '<br>';
-							echo "Nom: ". $data['nom']. '<br>';
-							echo "Prénom: ". $data['prenom']. '<br>';
-							echo "Mail: ". $data['mail']. '<br>';
-							echo "Adresse: ". $data['adresse']. '<br>';
-							echo "Image: ". $data['image']. '<br>';
-							echo "Image du mur: ". $data['wallpaper']. '<br>';
-						}
+					while($data = mysqli_fetch_assoc($req)) { 
+						echo "ID: ". $data['id']. '<br>';
+						echo "Nom: ". $data['nom']. '<br>';
+						echo "Prénom: ". $data['prenom']. '<br>';
+						echo "Mail: ". $data['mail']. '<br>';
+						echo "Adresse: ". $data['adresse']. '<br>';
+						echo "Image: ". $data['image']. '<br>';
+						echo "Image du mur: ". $data['wallpaper']. '<br>';
 					}
-					else {
-						echo 'Error ID';
+				}
+				else {
+					echo 'Error ID';
+				}
+				?>
+
+				<form method="post">
+				<div class="form-group">
+					<label class="col-md-1 col-form-label"></label>
+					<label><input type="submit" class="btn btn-primary" value="Commerçants" name="button1"></label>
+					<label><input type="submit" class="btn btn-primary" value="Requêtes des nouveaux Administrateurs" name="button2"></label>
+				</div>
+
+				<?php
+				session_start();
+
+				
+				if(!empty($_SESSION['mail']) && !empty($_SESSION['MDP'])) {
+					$servername = "localhost";
+					$username ="root";
+					$password = "";
+					$dbname = "piscinedb2";
+					$sql = "";
+
+					$connection = new mysqli($servername, $username, $password, $dbname);
+
+					if($connection->connect_error) {
+						die("Connection failed: " . $connection->connect_error);
 					}
 
+					if(isset($_POST['button1'])) {
+						$sql = "SELECT * FROM vendeur";
+						$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+						while($data = mysqli_fetch_assoc($req)) { 
+							echo "ID: ". $data['id']. '<br>';
+							echo "mail: ". $data['mail']. '<br>';
+							echo "Nom: ". $data['nom']. '<br>';
+							echo "Prénom: ". $data['prenom']. '<br><br>';
+						}
+					}
+
+					if(isset($_POST['button2'])) {
+						$button2 = true;
+					}
+				else {
+					//echo 'Error ID';
+					//$button2 = false;
+				}
+
+				if($button2 == true) {
+					$sql = "SELECT * FROM admin WHERE (accepte = 0)";
+						$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+						while($data = mysqli_fetch_assoc($req)) { 
+							echo '<form mehod="post">';
+							echo '<label class="col-form-group row"></label>';
+							echo "ID: ". $data['id']. '<br>';
+							echo "mail: ". $data['mail']. '<br>';
+							echo "Nom: ". $data['nom']. '<br>';
+							echo "Prénom: ". $data['prenom']. '<br><br>';
+							//echo '<label><input type="submit" class="btn btn-primary" value="Accepter" name="button3"> </label>';
+							//echo '<label><input type="submit" class="btn btn-primary" value="Supprimer" name="button"4"> </label>';
+							echo '</form>';
+						}
+				}
+			}
 				?>
+			</form>
+
 			</div>
 		</div>
 
@@ -88,7 +139,8 @@
 			</div>
 	</form>
 
-	<div>
-
+	</div>
+</div>
+<?php include 'footer.php'; ?>
 </body>
 </html>
