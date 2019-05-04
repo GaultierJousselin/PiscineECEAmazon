@@ -13,6 +13,19 @@ if (isset($_GET['clear']))
 	}
 }
 
+if (isset($_SESSION['cart']))
+{
+	if (isset($_POST['removeProd']))
+	{
+		unset($_SESSION['cart'][$_POST['removeProd']]);
+	}
+	if (isset($_GET['updateQuantity']) && isset($_GET['id']))
+	{
+		echo "COUCOU"; 
+		$_SESSION['cart'][$_GET['id']]['quantite'] = $_GET['updateQuantity'];
+	}
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +37,7 @@ if (isset($_GET['clear']))
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="global.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script type="text/javascript">
 		$(document).ready(function(){	
@@ -34,20 +48,38 @@ if (isset($_GET['clear']))
 		{
 			window.location.href = "panier.php?clear=true";
 		}
-
-		function updatePrice(value, quantity, price, cat, id)
+		function clearProd(id)
 		{
-			alert("The input value has changed. The new value is: " + value);
+			console.log(id);
+			sendPostRequest("panier.php", "removeProd=" + id);
+			window.location.href = "panier.php";
+		}
+
+		function updatePrice(id)
+		{
+			// alert("The input value has changed. The new value is: " + value);
+
 			// var oldPrice = parseInt(document.getElementById('totalPrice').innerHTML);
 			// var diffPrice = quantity * price;
-			// var newPrice = oldPrice - diffPrice + parseInt(e.target.value) * price;
+			// var newPrice = oldPrice - diffPrice + parseInt(value) * price;
+			// console.log(quantity);
+			// console.log(oldPrice);
+			// console.log(oldPrice - diffPrice);
+			// console.log(newPrice);
 			// document.getElementById('totalPrice').innerHTML = newPrice;
-			// sendPostRequest("panier.php", "updatePrice=" + newPrice);
+			// sendPostRequest("panier.php", "updateQuantity=" + value + "&id=" + id);
+			var value = document.getElementById(id).value;
+			window.location.href = "panier.php?updateQuantity=" + value + "&id=" + id;
 		}
 
 		function goToOrderPage()
 		{
 			window.location.href = "commande.php";
+		}
+
+		function lol(val)
+		{
+			alert("LOL: " + val);
 		}
 
 	</script>
@@ -72,7 +104,7 @@ if (isset($_GET['clear']))
 
 				$totalPrice = getCartTotalPrice();
 
-				echo "<div style='position: fixed; top: 0px; width: 100%; left: 50%; transform: translateX(-50%); padding: 20px; padding-top: 76px; background-color: white'>";
+				echo "<div style='position: fixed; top: 0px; width: 100%; left: 50%; z-index: 1000; transform: translateX(-50%); padding: 20px; padding-top: 76px; background-color: white'>";
 				echo "<button class='btn btn-danger' onclick='clearCart()'>Vider le panier</button>";
 				echo "<button class='btn btn-success' style='float:right' onclick='goToOrderPage()'>Passer à la commande</button>";
 				echo "<span style='float:right; margin-right: 40px; padding-top: 6px; font-size: 18px; font-weight: bold'>Prix Total: <span id='totalPrice'>".$totalPrice."</span> €</span>";
@@ -81,9 +113,8 @@ if (isset($_GET['clear']))
 				echo "<br />";
 				echo "<br />";
 
-				for ($i = 0; $i < $cartSize; $i++)
+				foreach ($cart as $row => $product)
 				{
-					$product = $cart[$i];
 					$cat = $product['cat'];
 					$productId = $product['id_produit'];
 
@@ -93,35 +124,39 @@ if (isset($_GET['clear']))
 
 					echo "<hr />";
 					echo "<div class='container-fluid'>";
-					echo "	<table class='product_table_search'><tbody>";
 					echo "		<div class='row'>";
-					echo "			<tr class='col-lg-2'>";
-					echo "				<td>";
-					echo "					<strong>".$data['titre']."</strong>";
-					echo "				</td>";
-					echo "			</tr>";
-					echo "		</div>";
-					echo "		<div class='row' style='display: inline-block'";
-					echo "			<div class='col-lg-6'>";
-					echo "				<tr >";
-					echo "					<td >";
-					echo "						<img src=".$data['photo']." alt='nous n avons pas trouvé' width= '100px'>";
-					echo "					</td>";
-					echo "					<td >";
-					echo "						<p>".$data['description']."</p><br />";
-					echo "						<p><strong>Prix : </strong>".$data['prix']." €</p>";
-					echo "						<p><strong>Quantité: </strong><input onupdate=\"updatePrice(this.value, ".$product['quantite'].", ".$data['prix'].", ".$cat.", ".$data['id'].")\" type=\"number\" name=\"quantity\" min=\"1\" max=\"5\" value=\"".$product['quantite']."\"></p>";
-					echo "					</td>";
-					echo "				</tr>";
+					echo "			<div class='col-lg'>";
+					echo "				<strong>".$data['titre']."</strong><br /><br />";
+					echo "				<img src=".$data['photo']." alt='nous n avons pas trouvé' width= '100px'>";
+					echo "			</div>";
+					echo "			<div class='col col-lg-3'>";
+					echo "				<br /><button class='btn btn-sm btn-danger' onclick='clearProd(".$row.")'>Supprimer du panier</button><br /><br /><br />";
+					echo "				<div>";
+					echo "					<p><strong>Prix : </strong>".$data['prix']." €</p>";
+					echo "					<p><strong>Quantité: </strong><input id='".$row."' type=\"number\" name=\"quantity\" min=\"1\" max=\"5\" value=\"".$product['quantite']."\"><button class='btn btn-sm' onclick='updatePrice(".$row.")'>OK</button></p>";
+					echo "				</div>";
 					echo "			</div>";
 					echo "		</div>";
-					echo "	</tbody></table>";
 					echo "</div>";
 				}
 			}
 			else
 			{
-				echo "Votre panier est vide ! Vite vite, retrounez sur le site pour le remplir <a href='recherche.php'>ici</a>";
+					echo "<hr />";
+					echo "<br />";
+					echo "<div class='container'>";
+					echo "	<div class='row'>";
+					echo "		<div class='col-lg-2'>";
+					echo "			<img src='images/sad.jpg' class='img-rounded' width='80%' height='90%'>";
+					echo "		</div>";
+					echo "		<div class='col-lg-10'>";
+					echo "			<br />";
+					echo "			<br />";
+					echo "			<strong>Il semblerait que votre panier soit vide ! Vite vite, retrounez sur le site pour le remplir <a href='recherche.php'>ici</a></strong>";
+					echo "		</div>";
+					echo "	</div>";
+					echo "</div>";
+				
 			}
 
 		?>

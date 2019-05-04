@@ -1,3 +1,4 @@
+<hr />
 <div class="page-footer">
 	<div class="container">
 		<div class="row">
@@ -22,4 +23,5 @@
 		</div>
 		<div class="footer-copyright text-center">&copy; 2019 Copyright | Droit d'auteur: Jousselin Gaultier</div>
 	</div>
-</div> 
+</div>
+

@@ -63,14 +63,34 @@ function getCartTotalPrice()
 		$cart = $_SESSION['cart'];
 		$cartSize = count($cart);
 
-		for ($i = 0; $i < $cartSize; $i++)
+		foreach ($cart as $row => $elem)
 		{
-			$product = $cart[$i];
-			$totalPrice += $product['valeur_commande'] * $product['quantite'];
+			$totalPrice += $elem['valeur_commande'] * $elem['quantite'];
 		}
 	}
 
 	return $totalPrice;
+}
+
+function connectGmail()
+{
+
+}
+function sendMail($mail, $nbr_cmd, $price_cmd)
+{
+	$to      =  $mail;
+	$subject = 'Confirmation commande n°'.$nbr_cmd.'.';
+	$message = '<h1>Bonjour !</h1>
+				<p>Voici la confirmation de la commande n°'.$nbr_cmd.' d un montant de '.$price_cmd.' euros.</p>
+				<br/> 
+				<p><strong>Nous esperons vous revoir bientôt sur ECEAmazon !</strong></p>  
+				';
+	$headers = 'From: no.reply.ece.amazon@gmail.com' . "\r\n" .
+	'X-Mailer: PHP/' . phpversion() . "\r\n"
+	;
+	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+	mail($to, $subject, $message, $headers);
 }
 
 ?>

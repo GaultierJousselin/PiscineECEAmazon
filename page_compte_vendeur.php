@@ -15,24 +15,9 @@
 	</script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md">
-		<a class="navbar-brand" href="Accueil.php">Logo</a>
-		<button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#main-navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="main-navigation">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="categories.php">Catégories</a></li>
-				<li class="nav-item"><a class="nav-link" href="best-sellers.php">Best-Sellers</a></li>
-				<li class="nav-item"><a class="nav-link" href="recherche.php">Recherche</a></li>
-				<li class="nav-item"><a class="nav-link" href="vendre.php">Vendre</a></li>
-				<li class="nav-item"><a class="nav-link" href="compte.php">Mon Compte</a></li>
-				<li class="nav-item"><a class="nav-link" href="panier.php">Panier</a></li>
-			</ul>
-		</div>
-	</nav>
-	
-	<div class="col-md-12">
+	<?php include 'Navbar.php'; ?>
+
+	<div class="container container-margin">
 		<h2>Votre compte marchand</h2>
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -76,15 +61,14 @@
 		</div>
 
 
-	<form action="deconnexion.php" method="post">
-			<div class="form-group">
-				<label class="col-md-2 col-form-label">
-					<input type="submit" class ="btn btn-primary" value="Déconnexion">
-				</label>			
-			</div>
-	</form>
-
-	<div>
-
+		<form action="deconnexion.php" method="post">
+				<div class="form-group">
+					<label class="col-md-2 col-form-label">
+						<input type="submit" class ="btn btn-primary" value="Déconnexion">
+					</label>			
+				</div>
+		</form>
+	</div>
+	<?php include 'footer.php'; ?>
 </body>
 </html>

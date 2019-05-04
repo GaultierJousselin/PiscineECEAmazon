@@ -72,7 +72,10 @@ if (isset($_POST['buy']) && isset($_SESSION['cart']) && count($_SESSION['cart'])
 
             $res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
         }
-
+        $IncrementValue = 1;
+        $sql = "UPDATE `acheteur` SET `nbr_commande`= `nbr_commande`+ '".$IncrementValue."' WHERE `id`='".$user_id."'";
+        $res = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
+        sendMail($user['mail'], $checkoutNumber, $checkoutPrice);   
         $_SESSION['cart'] = [];
 
         header("location: buy_success.php?checkout=".$checkoutNumber."&price=".$checkoutPrice);

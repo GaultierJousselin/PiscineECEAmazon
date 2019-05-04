@@ -12,26 +12,39 @@ session_start();
 // $sql = "SELECT * FROM `livres`";
 // $result = mysqli_query($db_handle, $sql) or die(mysqli_error($db_handle));
 
-// if($db_found) {
-// 	if (mysqli_num_rows($result) != 0) {
-// 		$liv_nom = "Aucun Best Seller";
-// 		$liv_image = "images/nothing.png";
-// 		$mus_nom = "Aucun Best Seller";
-// 		$mus_image = "images/nothing.png";
-// 		$vet_nom = "Aucun Best Seller";
-// 		$vet_image = "images/nothing.png";
-// 		$sel_nom = "Aucun Best Seller";
-// 		$sel_image = "images/nothing.png";
-// 		echo "coucou";
-// 	}
-// 	else
-// 	{
-// 		echo "ERROR !!!!!!!!!!!";
-// 	}
-// } else {
-// 	echo "Nous ne trouvons rien.";
-// }
 include 'sql_functions.php';
+
+if(!isset($bs_livres)) {
+	$bs_livres_titre = "Aucun Best Seller";
+	$bs_livres_photo = "images/nothing.png";
+} else {
+	$bs_livres_titre = $bs_livres->titre;
+	$bs_livres_photo = $bs_livres->photo; 
+}
+
+if(!isset($bs_musique)) {
+	$bs_musique_titre = "Aucun Best Seller";
+	$bs_musique_photo = "images/nothing.png";
+} else {
+	$bs_musique_titre = $bs_musique->titre;
+	$bs_musique_photo = $bs_musique->photo;
+}
+
+if(!isset($bs_vetements)) {
+	$bs_vetements_titre = "Aucun Best Seller";
+	$bs_vetements_photo = "images/nothing.png";
+} else {
+	$bs_vetements_titre = $bs_vetements->titre;
+	$bs_vetements_photo = $bs_vetements->photo;
+}
+
+if(!isset($bs_sel)) {
+	$bs_sel_titre = "Aucun Best Seller";
+	$bs_sel_photo = "images/nothing.png";
+} else {
+	$bs_sel_titre = $bs_sel->titre;
+	$bs_sel_photo = $bs_sel->photo;
+}
 
 ?>
 
@@ -54,26 +67,29 @@ include 'sql_functions.php';
 <body>
 	<?php include 'Navbar.php'; ?>
 	<div class="container container-margin">
+	<h1  style="text-align:center"> Voice les Best-Sellers des différentes catégories !</h1><br/>
 		<div class="row">
 				<div class="offset-md-1 col-md-3">
+					<h4>Livre :</h4>
 					<div class="img-thumbnail">
-						<a href="recherche.php/$idliv" target="_blank">
-							<img src="<?php echo $bs_livres->photo; ?>" style="width: 100%">
+						<a href="recherche.php?search=<?php echo $bs_livres_titre; ?>">
+							<img src="<?php echo $bs_livres_photo; ?>" style="width: 100%">
 							<div class="caption">
 								<p>
-									<?php echo $bs_livres->titre; ?>
+									<?php echo $bs_livres_titre; ?>
 								</p>
 							</div>
 						</a>
 					</div>
 				</div>
 				<div class="offset-md-4 col-md-3">
+					<h4>Musique :</h4>
 					<div class="img-thumbnail">
-						<a href="recherche.php/$idmus" target="_blank">
-							<img src="<?php echo $bs_musique->photo; ?>" style="width: 100%">
+						<a href="recherche.php?search=<?php echo $bs_musique_titre; ?>">
+							<img src="<?php echo $bs_musique_photo; ?>" style="width: 100%">
 							<div class="caption">
 								<p>
-									<?php echo $bs_musique->titre; ?>
+									<?php echo $bs_musique_titre; ?>
 								</p>
 							</div>
 						</a>
@@ -83,24 +99,26 @@ include 'sql_functions.php';
 		<br>
 		<div class="row">
 			<div class="offset-md-1 col-md-3">
-					<div class="img-thumbnail">
-						<a href="recherche.php/$idvet" target="_blank">
-							<img src="<?php echo $bs_vetements->photo; ?>" style="width: 100%">
+				<h4>Vetement :</h4>	
+				<div class="img-thumbnail">
+						<a href="recherche.php?search=<?php echo $bs_vetements_titre; ?>">
+							<img src="<?php echo $bs_vetements_photo; ?>" style="width: 100%">
 							<div class="caption">
 								<p>
-									<?php echo $bs_vetements->titre; ?>
+									<?php echo $bs_vetements_titre; ?>
 								</p>
 							</div>
 						</a>
 					</div>
 				</div>
 				<div class="offset-md-4 col-md-3">
+					<h4>Sport et Loisirs :</h4>
 					<div class="img-thumbnail">
-						<a href="recherche.php/$idsel" target="_blank">
-							<img src="<?php echo $bs_sel->photo; ?>" style="width: 100%">
+						<a href="recherche.php?search=<?php echo $bs_sel_titre; ?>">
+							<img src="<?php echo $bs_sel_photo; ?>" style="width: 100%">
 							<div class="caption">
 								<p>
-									<?php echo $bs_sel->titre; ?>
+									<?php echo $bs_sel_titre; ?>
 								</p>
 							</div>
 						</a>
