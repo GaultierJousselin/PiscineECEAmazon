@@ -68,7 +68,6 @@
 				</div>
 
 				<?php
-				session_start();
 
 				
 				if(!empty($_SESSION['mail']) && !empty($_SESSION['MDP'])) {

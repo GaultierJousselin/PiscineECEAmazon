@@ -57,7 +57,7 @@ session_start();
 					</label>
 
 					<?php
-						session_start();
+
 				
 						if(isset($_POST['button1'])) {
 							$mail = isset($_POST["mail"])? $_POST["mail"]: "";
@@ -80,7 +80,7 @@ session_start();
 								$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 								if(mysqli_num_rows($req1) == 1){
-									session_start();
+
 									$_SESSION['mail'] = $mail;
 									$_SESSION['MDP'] = $MDP; 
 									$_SESSION['statut'] = "acheteur";
@@ -97,7 +97,7 @@ session_start();
 									$req2 = mysqli_query($connection, $sql2) or die ("Message d'erreur: " . mysqli_error($connection) );
 
 									if(mysqli_num_rows($req2) == 1){
-										session_start();
+
 										$_SESSION['mail'] = $mail;
 										$_SESSION['MDP'] = $MDP; 
 										$_SESSION['statut'] = "vendeur";
@@ -232,12 +232,12 @@ session_start();
 						}
 
 						if(mysqli_num_rows($req1) == 1 && $_SESSION['accepte']== 1){
-							session_start();
 							$_SESSION['mail'] = $mail;
 							$_SESSION['MDP'] = $MDP; 
 							$_SESSION['statut'] = "admin";
 
-							header('Location: '. 'page_compte_admin.php');
+							// header('Location: '. 'page_compte_admin.php');
+							echo "<script>window.location.href='page_compte_admin.php';</script>";
 							while($data = mysqli_fetch_assoc($req1)) { 
 								$_SESSION['ID'] = $data['id'];
 							}
@@ -258,39 +258,39 @@ session_start();
 				}
 
 				//Envoie de la demande création de compte aux administrateurs
-				if($_POST['button6']){
+				if(isset($_POST['button6'])){
 					$mail = isset($_POST["mail"])? $_POST["mail"]: "";
 					$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
 					$nom = isset($_POST["nom"])? $_POST["nom"]: "";
 					$prenom = isset($_POST["prenom"])? $_POST["prenom"]: "";
 				
-					if(isset($_POST['button6']) && empty($_SESSION) ) {
-						if(!empty($MDP) && !empty($mail) && !empty($nom) && !empty($prenom)) {
-							$servername = "localhost";
-							$username ="root";
-							$password = "";
-							$dbname = "piscinedb2";
-				
-							$connection = new mysqli($servername, $username, $password, $dbname);
+					if(!empty($MDP) && !empty($mail) && !empty($nom) && !empty($prenom)) {
+						$servername = "localhost";
+						$username ="root";
+						$password = "";
+						$dbname = "piscinedb2";
+			
+						$connection = new mysqli($servername, $username, $password, $dbname);
 
-							if($connection->connect_error) {
-								die("Connection failed: " . $connection->connect_error);
-							}
+						$mail = mysqli_real_escape_string($connection, $mail);
+						$MDP = mysqli_real_escape_string($connection, $MDP);
+						$nom = mysqli_real_escape_string($connection, $nom);
+						$prenom = mysqli_real_escape_string($connection, $prenom);
 
-							$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND MDP = '$MDP')";
-							$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
-
-							if(mysqli_num_rows($req1) == 0){
-								$sql = "INSERT INTO admin VALUE (0, '$nom', '$prenom', ' ', ' ', ' ', '$mail', '$MDP', 0)";
-								$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
-								echo 'Une demande de création de compte a bien été envoyé aux administrateurs.<br> Veuillez patienter en attendant leur réponse. Merci.';
-							}
-							else{
-								echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
-							}
+						if($connection->connect_error) {
+							die("Connection failed: " . $connection->connect_error);
 						}
-						else {
-							echo 'Impossible de créer le compte compte.<br>';
+
+						$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND MDP = '$MDP')";
+						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+						if(mysqli_num_rows($req1) == 0){
+							$sql = "INSERT INTO admin (`nom`, `prenom`, `mail`, `MDP`) VALUE ('$nom', '$prenom', $mail', '$MDP')";
+							$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+							echo 'Une demande de création de compte a bien été envoyé aux administrateurs.<br> Veuillez patienter en attendant leur réponse. Merci.';
+						}
+						else{
+							echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
 						}
 					}
 					else {
