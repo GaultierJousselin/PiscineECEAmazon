@@ -271,33 +271,33 @@ if (isset($_SESSION['ID']))
 					$nom = isset($_POST["nom"])? $_POST["nom"]: "";
 					$prenom = isset($_POST["prenom"])? $_POST["prenom"]: "";
 				
-					if(isset($_POST['button6']) && empty($_SESSION) ) {
-						if(!empty($MDP) && !empty($mail) && !empty($nom) && !empty($prenom)) {
-							$servername = "localhost";
-							$username ="root";
-							$password = "";
-							$dbname = "piscinedb2";
-				
-							$connection = new mysqli($servername, $username, $password, $dbname);
+					if(!empty($MDP) && !empty($mail) && !empty($nom) && !empty($prenom)) {
+						$servername = "localhost";
+						$username ="root";
+						$password = "";
+						$dbname = "piscinedb2";
+			
+						$connection = new mysqli($servername, $username, $password, $dbname);
 
-							if($connection->connect_error) {
-								die("Connection failed: " . $connection->connect_error);
-							}
+						$mail = mysqli_real_escape_string($connection, $mail);
+						$MDP = mysqli_real_escape_string($connection, $MDP);
+						$nom = mysqli_real_escape_string($connection, $nom);
+						$prenom = mysqli_real_escape_string($connection, $prenom);
 
-							$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND MDP = '$MDP')";
-							$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
-
-							if(mysqli_num_rows($req1) == 0){
-								$sql = "INSERT INTO admin VALUE (0, '$nom', '$prenom', ' ', ' ', ' ', '$mail', '$MDP', 0)";
-								$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
-								echo 'Une demande de création de compte a bien été envoyé aux administrateurs.<br> Veuillez patienter en attendant leur réponse. Merci.';
-							}
-							else{
-								echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
-							}
+						if($connection->connect_error) {
+							die("Connection failed: " . $connection->connect_error);
 						}
-						else {
-							echo 'Impossible de créer le compte compte.<br>';
+
+						$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND MDP = '$MDP')";
+						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+
+						if(mysqli_num_rows($req1) == 0){
+							$sql = "INSERT INTO admin (`nom`, `prenom`, `mail`, `MDP`) VALUE ('$nom', '$prenom', $mail', '$MDP')";
+							$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+							echo 'Une demande de création de compte a bien été envoyé aux administrateurs.<br> Veuillez patienter en attendant leur réponse. Merci.';
+						}
+						else{
+							echo 'Un utlisateur existe déjà avec des informations de connexion. <br> Veuillez selectionner un autre mail ou mot de passe. Merci. <br>';
 						}
 					}
 					else {
