@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +28,6 @@
 			<div class="col-md-11">
 				<!--affichage des ID de connexion de la session en cours-->
 				<?php
-				session_start();
-
 				if(isset($_SESSION['mail']) && isset($_SESSION['MDP'])) {
 					$servername = "localhost";
 					$username ="root";
@@ -61,14 +63,15 @@
 		</div>
 
 
-		<form action="deconnexion.php" method="post">
-				<div class="form-group">
-					<label class="col-md-2 col-form-label">
-						<input type="submit" class ="btn btn-primary" value="Déconnexion">
-					</label>			
-				</div>
-		</form>
-	</div>
-	<?php include 'footer.php'; ?>
+	<form action="deconnexion.php" method="post">
+			<div class="form-group">
+				<label class="col-md-2 col-form-label">
+					<input type="submit" class ="btn btn-primary" value="Déconnexion">
+				</label>			
+			</div>
+	</form>
+
+</div>
+<?php include 'footer.php'; ?>
 </body>
 </html>

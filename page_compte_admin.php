@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +21,7 @@
 <body>
 	<?php include 'Navbar.php'; ?>
 
-	<div class="container container-margin">
+		<div class="container container-margin">
 	<br><br><br><br>
 	<div class="col-md-12">
 		<h2>Votre compte Administrateur</h2>
@@ -30,7 +34,6 @@
 			<div class="col-md-12">
 				<!--affichage des ID de connexion de la session en cours-->
 				<?php
-				session_start();
 
 				if(!empty($_SESSION['mail']) && !empty($_SESSION['MDP'])) {
 					$servername = "localhost";
@@ -69,7 +72,6 @@
 
 				<?php
 
-				
 				if(!empty($_SESSION['mail']) && !empty($_SESSION['MDP'])) {
 					$servername = "localhost";
 					$username ="root";

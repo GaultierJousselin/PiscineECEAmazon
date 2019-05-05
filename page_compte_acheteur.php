@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,14 +21,14 @@
 <body>
 	<?php include 'Navbar.php'; ?>
 
-	<div class="container container-margin">
+		<div class="container container-margin">
+	<div class="col-md-12">
 		<h2>Votre compte client</h2>
 		<div class="row">
 			<div class="col-lg-1"></div>
 			<div class="col-lg-11">
 				<!--affichage des ID de connexion de la session en cours-->
 				<?php
-				session_start();
 
 				if(isset($_SESSION['mail']) && isset($_SESSION['MDP'])) {
 					$servername = "localhost";
@@ -60,14 +64,17 @@
 			</div>
 		</div>
 
-		<form action="deconnexion.php" method="post">
-				<div class="form-group">
-					<label class="col-md-2 col-form-label">
-						<input type="submit" class ="btn btn-primary" value="Déconnexion">
-					</label>			
-				</div>
-		</form>
+
+	<form action="deconnexion.php" method="post">
+			<div class="form-group">
+				<label class="col-md-2 col-form-label">
+					<input type="submit" class ="btn btn-primary" value="Déconnexion">
+				</label>			
+			</div>
+	</form>
+
 	</div>
-	<?php include 'footer.php'; ?>
+ </div>
+ <?php include 'footer.php'; ?>
 </body>
 </html>

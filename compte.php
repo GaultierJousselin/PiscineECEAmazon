@@ -26,10 +26,8 @@ if (isset($_SESSION['ID']))
 	</head>
 	<body>
 		<?php include 'Navbar.php'; ?>
-
 		<div class="container container-margin">
 			<form method="post">
-				<br><br>
 				<div class="form-group row">
 					<label class="col-md-1 col-form-label"></label>
 					<h2>Identifiez-vous</h2>
@@ -58,10 +56,12 @@ if (isset($_SESSION['ID']))
 					<label class="col-md-1 col-form-label"></label>
 					<label class="col-md-2 col-form-label">
 						<input type="submit" class="btn btn-primary" value="Identifiez-vous" name="button1">
-						<br><br><br><br><br><br>
+						<br><br><br>
 					</label>
 
 					<?php
+						
+						//Connexion pour un acheteur / vendeur
 						if(isset($_POST['button1'])) {
 							$mail = isset($_POST["mail"])? $_POST["mail"]: "";
 							$MDP = isset($_POST["MDP"])? $_POST["MDP"]: "";
@@ -91,13 +91,14 @@ if (isset($_SESSION['ID']))
 										$_SESSION['ID'] = $data['id'];
 									}
 
-									if (isset($_SESSION['oldPage']) && $_SESSION['oldPage'] != "none")
+
+									if (isset($_SESSION['oldPage']))
 									{
-										$page = $_SESSION['oldPage']; 
-										$_SESSION['oldPage'] = "none";
-										echo "<script>window.location.href='".$page."';</script>";
+										$oldPage = $_SESSION['oldPage'];
+										$_SESSION['oldPage'] = NULL;
+										echo "<script>window.location.href='".$oldPage."';</script>";
 									}
-									//header('Location: ' . "page_compte_acheteur.php");
+
 									echo "<script>window.location.href='page_compte_acheteur.php';</script>";
 								}
 								else {
@@ -113,7 +114,12 @@ if (isset($_SESSION['ID']))
 											$_SESSION['ID'] = $data['id'];
 										}
 
-										//header('Location: ' . "page_compte_vendeur.php");
+										if (isset($_SESSION['oldPage']))
+										{
+											$oldPage = $_SESSION['oldPage'];
+											$_SESSION['oldPage'] = NULL;
+											echo "<script>window.location.href='".$oldPage."';</script>";
+										}
 										echo "<script>window.location.href='page_compte_vendeur.php';</script>";
 									}
 									else {
@@ -149,6 +155,7 @@ if (isset($_SESSION['ID']))
 					<input type="submit" class ="btn btn-primary" value="Faire la demande de compte" name="button4">
 				</label>				
 			</div>
+
 			<?php
 				//Affichage du champs de connexion pour un administrateur
 				if(isset($_POST['button3'])) {
@@ -182,11 +189,11 @@ if (isset($_SESSION['ID']))
 					<div class="form-group row">
 						<label class="col-md-1 col-form-label"></label>
 						<label for="nom" class="col-md-2 col-form-label" placeholder="Nom">Nom & Prénom</label>
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<input type="text" class="form-control" name="nom"/>
 						</div>
 						<label for="prenom" class="col-form-label" placeholder="prenom"></label>
-						<div class="col-md-1">
+						<div class="col-md-2">
 							<input type="text" class="form-control" name="prenom"/>
 						</div>
 					</div>
@@ -233,20 +240,18 @@ if (isset($_SESSION['ID']))
 
 						$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND mdp = '$MDP')";
 						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
-
-						while($data = mysqli_fetch_assoc($req1)) { 
-								$_SESSION['accepte'] = $data['accepte'];
-						}
-
-						if(mysqli_num_rows($req1) == 1 && $_SESSION['accepte']== 1){
-							$_SESSION['mail'] = $mail;
-							$_SESSION['MDP'] = $MDP; 
-							$_SESSION['statut'] = "admin";
-
-							// header('Location: '. 'page_compte_admin.php');
-							echo "<script>window.location.href='page_compte_admin.php';</script>";
-							while($data = mysqli_fetch_assoc($req1)) { 
+						
+						if(mysqli_num_rows($req1) == 1)
+						{
+							$data = mysqli_fetch_assoc($req1);
+							if ($data['accepte'] == 1)
+							{
+								$_SESSION['mail'] = $mail;
+								$_SESSION['MDP'] = $MDP; 
+								$_SESSION['statut'] = "admin";
 								$_SESSION['ID'] = $data['id'];
+								
+								echo "<script>window.location.href='page_compte_admin.php';</script>";
 							}
 						}
 						else {
