@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +26,6 @@
 
 		<!-- Vérification qu'un admin ou un vendeur est connecté pour pouvoir ajouter un produit -->
 		<?php
-		session_start();
 			if(!empty($_SESSION)) {
 				$servername = "localhost";
 				$username ="root";
@@ -83,8 +87,6 @@
 			</div>
 
 		<?php
-
-			session_start();
 			$titre = isset($_POST["titre"])? $_POST["titre"]: "";
 			$auteur = isset($_POST["auteur"])? $_POST["auteur"]: "";
 			$annee = isset($_POST["annee"])? $_POST["annee"]: "";
@@ -189,7 +191,7 @@
 									die("Connection failed: " . $connection->connect_error);
 								}
 
-								$sql0 = "SELECT * FROM livres, vendeur, admin WHERE (livres.titre = '$Titre' AND livres.auteur = '$auteur' AND ( livres.id_vendeur = vendeur.id OR livres.id_vendeur = admin.id) )";
+								$sql0 = "SELECT * FROM livres, vendeur, admin WHERE (livres.titre = '$titre' AND livres.auteur = '$auteur' AND ( livres.id_vendeur = vendeur.id OR livres.id_vendeur = admin.id) )";
 								$req0 = mysqli_query($connection, $sql0) or die ("Message d'erreur1: " . mysqli_error($connection) );
 
 								if(mysqli_num_rows($req0) == 0){
@@ -301,7 +303,7 @@
 									die("Connection failed: " . $connection->connect_error);
 								}
 
-								$sql0 = "SELECT * FROM musique, vendeur, admin WHERE (musique.titre = '$Titre' AND musique.auteur = '$auteur' AND ( musique.id_vendeur = vendeur.id OR musique.id_vendeur = admin.id) )";
+								$sql0 = "SELECT * FROM musique, vendeur, admin WHERE (musique.titre = '$titre' AND musique.auteur = '$auteur' AND ( musique.id_vendeur = vendeur.id OR musique.id_vendeur = admin.id) )";
 								$req0 = mysqli_query($connection, $sql0) or die ("Message d'erreur1: " . mysqli_error($connection) );
 
 								if(mysqli_num_rows($req0) == 0){
@@ -389,7 +391,7 @@
 									die("Connection failed: " . $connection->connect_error);
 								}
 
-								$sql0 = "SELECT * FROM sel, vendeur, admin WHERE (sel.titre = '$Titre' AND ( sel.id_vendeur = vendeur.id OR sel.id_vendeur = admin.id) )";
+								$sql0 = "SELECT * FROM sel, vendeur, admin WHERE (sel.titre = '$titre' AND ( sel.id_vendeur = vendeur.id OR sel.id_vendeur = admin.id) )";
 								$req0 = mysqli_query($connection, $sql0) or die ("Message d'erreur1: " . mysqli_error($connection) );
 
 								if(mysqli_num_rows($req0) == 0){
@@ -494,7 +496,7 @@
 									die("Connection failed: " . $connection->connect_error);
 								}
 
-								$sql0 = "SELECT * FROM vetements, vendeur, admin WHERE (vetements.titre = '$Titre' AND vetements.type = '$type' AND ( vetements.id_vendeur = vendeur.id OR vetements.id_vendeur = admin.id) )";
+								$sql0 = "SELECT * FROM vetements, vendeur, admin WHERE (vetements.titre = '$titre' AND vetements.type = '$type' AND ( vetements.id_vendeur = vendeur.id OR vetements.id_vendeur = admin.id) )";
 								$req0 = mysqli_query($connection, $sql0) or die ("Message d'erreur1: " . mysqli_error($connection) );
 
 								if(mysqli_num_rows($req0) == 0){
