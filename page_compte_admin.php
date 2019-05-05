@@ -1,6 +1,30 @@
 <?php
 session_start();
 
+$servername = "localhost";
+$username ="root";
+$password = "";
+$dbname = "piscinedb2";
+$sql = "";
+
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+if($connection->connect_error) {
+	die("Connection failed: " . $connection->connect_error);
+}
+
+if(isset($_POST['button3'])) {
+	$sql = "UPDATE admin SET accepte = '1' WHERE ('" . $_POST['id'] . "' = id)";
+	$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+	echo 'accepté!';
+}
+
+if(isset($_POST['button4'])) {
+	$sql = "DELETE FROM admin WHERE ('" . $_POST['id'] . "' = id)";
+	$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+	echo 'supprimé!';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -74,17 +98,6 @@ session_start();
 				<?php
 				
 				if(!empty($_SESSION['mail']) && !empty($_SESSION['MDP'])) {
-					$servername = "localhost";
-					$username ="root";
-					$password = "";
-					$dbname = "piscinedb2";
-					$sql = "";
-
-					$connection = new mysqli($servername, $username, $password, $dbname);
-
-					if($connection->connect_error) {
-						die("Connection failed: " . $connection->connect_error);
-					}
 
 					if(isset($_POST['button1'])) {
 						$sql = "SELECT * FROM vendeur";
@@ -99,38 +112,31 @@ session_start();
 					}
 
 					if(isset($_POST['button2'])) {
-						$sql = "SELECT * FROM admin WHERE (accepte = 0)";
+						// $sql = "SELECT * FROM admin WHERE (accepte = 0)";
+						$sql = "SELECT * FROM admin WHERE accepte = 0";
 						$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
 
-						if(mysqli_num_rows($req) == 1) {
-						$data = mysqli_fetch_assoc($req);
-							echo '<form mehod="post">';
-							echo '<label class="col-form-group row"></label>';
-							echo "ID: ". $data['id']. '<br>';
-							$_SESSION['id2'] = $data['id'];
-							echo "mail: ". $data['mail']. '<br>';
-							echo "Nom: ". $data['nom']. '<br>';
-							echo "Prénom: ". $data['prenom']. '<br><br>';
-							echo '<label><input type="submit" class="btn btn-primary" value="Accepter" name="button3"> </label>';
-							echo '<label><input type="submit" class="btn btn-primary" value="Supprimer" name="button4"> </label>';
-							echo '</form>';
+						if(mysqli_num_rows($req) >= 1) {
+							while($data = mysqli_fetch_assoc($req)){
+								echo '<form method="post">';
+								echo '<label class="col-form-group row"></label>';
+								echo "ID: ". $data['id']. '<br>';
+								$_SESSION['id2'] = $data['id'];
+								echo "mail: ". $data['mail']. '<br>';
+								echo "Nom: ". $data['nom']. '<br>';
+								echo "Prénom: ". $data['prenom']. '<br><br>';
+								echo "<input name='id' value='".$data['id']."' type='hidden' />";
+								echo '<label><input type="submit" class="btn btn-primary" value="Accepter" name="button3"> </label>';
+								echo '<label><input type="submit" class="btn btn-primary" value="Supprimer" name="button4"> </label>';
+								echo '</form>';
+							}
 						}
 						else {
 							echo 'Aucune demande en attente';
 						}
 					}
 
-					if(isset($_POST['button3'])) {
-						$sql = "UPDATE admin SET accepte = '1' WHERE ('" . $_SESSION['id2'] . "' = id)";
-						$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
-						echo 'accepté!';
-					}
-
-					if(isset($_POST['button4'])) {
-						$sql = "DELETE FROM admin WHERE ('" . $_SESSION['id2'] . "' = id)";
-						$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
-						echo 'supprimé!';
-					}
+					
 
 			}
 				?>

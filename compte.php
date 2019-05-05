@@ -190,7 +190,7 @@ if (isset($_SESSION['ID']))
 						<label for="nom" class="col-md-2 col-form-label" placeholder="Nom">Nom & Prénom</label>
 						<div class="col-md-2">
 							<input type="text" class="form-control" name="nom"/>
-						</div>e
+						</div>
 						<label for="prenom" class="col-form-label" placeholder="prenom"></label>
 						<div class="col-md-2">
 							<input type="text" class="form-control" name="prenom"/>
@@ -292,12 +292,12 @@ if (isset($_SESSION['ID']))
 							die("Connection failed: " . $connection->connect_error);
 						}
 
-						$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND MDP = '$MDP')";
-						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur: " . mysqli_error($connection) );
+						$sql1 = "SELECT * FROM admin WHERE (mail = '$mail' AND mdp = '$MDP')";
+						$req1 = mysqli_query($connection, $sql1) or die ("Message d'erreur:1 " . mysqli_error($connection) );
 
 						if(mysqli_num_rows($req1) == 0){
-							$sql = "INSERT INTO admin (`nom`, `prenom`, `mail`, `MDP`) VALUE ('$nom', '$prenom', $mail', '$MDP')";
-							$req = mysqli_query($connection, $sql) or die ("Message d'erreur: " . mysqli_error($connection) );
+							$sql = "INSERT INTO admin (`nom`, `prenom`, `mail`, `mdp`) VALUES ('$nom', '$prenom', '$mail', '$MDP')";
+							$req = mysqli_query($connection, $sql) or die ("Message d'erreur 2 : " . mysqli_error($connection) );
 							echo 'Une demande de création de compte a bien été envoyé aux administrateurs.<br> Veuillez patienter en attendant leur réponse. Merci.';
 						}
 						else{

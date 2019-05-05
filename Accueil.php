@@ -7,33 +7,41 @@ include 'sql_functions.php';
 if(!isset($bs_livres)) {
 	$bs_livres_titre = "Aucun Best Seller";
 	$bs_livres_photo = "images/nothing.png";
+	$bs_livres_id = "";
 } else {
 	$bs_livres_titre = $bs_livres->titre;
 	$bs_livres_photo = $bs_livres->photo; 
+	$bs_livres_id = $bs_livres->id; 
 }
 
 if(!isset($bs_musique)) {
 	$bs_musique_titre = "Aucun Best Seller";
 	$bs_musique_photo = "images/nothing.png";
+	$bs_musique_id = "";
 } else {
 	$bs_musique_titre = $bs_musique->titre;
 	$bs_musique_photo = $bs_musique->photo;
+	$bs_musique_id = $bs_musique->id;
 }
 
 if(!isset($bs_vetements)) {
 	$bs_vetements_titre = "Aucun Best Seller";
 	$bs_vetements_photo = "images/nothing.png";
+	$bs_vetements_id = "";
 } else {
 	$bs_vetements_titre = $bs_vetements->titre;
 	$bs_vetements_photo = $bs_vetements->photo;
+	$bs_vetements_id = $bs_vetements->id;
 }
 
 if(!isset($bs_sel)) {
 	$bs_sel_titre = "Aucun Best Seller";
 	$bs_sel_photo = "images/nothing.png";
+	$bs_sel_id = "";
 } else {
 	$bs_sel_titre = $bs_sel->titre;
 	$bs_sel_photo = $bs_sel->photo;
+	$bs_sel_id = $bs_sel->id;
 }
 
 
@@ -68,7 +76,7 @@ if(!isset($bs_sel)) {
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
-      <div class="carousel-inner" style= "height:70vh">
+      <div class="carousel-inner" style= "height:65vh">
         <div class="carousel-item active">
           <img src="images/carrousel1.png" class="d-block w-100" alt="annonce">
         </div>
@@ -98,7 +106,7 @@ if(!isset($bs_sel)) {
       <div class="col">
         <h4>Livre :</h4>
         <div class="img-thumbnail">
-          <a href="recherche.php?search=<?php echo $bs_livres_titre; ?>">
+        <a href="produit.php?id=<?php echo $bs_livres_id; ?>&cat=livres">
             <img src="<?php echo $bs_livres_photo; ?>" style="width: 100%">
             <div class="caption">
               <p>
@@ -112,7 +120,7 @@ if(!isset($bs_sel)) {
       <div class="col">
         <h4>Musique :</h4>
         <div class="img-thumbnail">
-          <a href="recherche.php?search=<?php echo $bs_musique_titre; ?>">
+        <a href="produit.php?id=<?php echo $bs_musique_id; ?>&cat=musique">
             <img src="<?php echo $bs_musique_photo; ?>" style="width: 100%">
             <div class="caption">
               <p>
@@ -126,7 +134,7 @@ if(!isset($bs_sel)) {
     	<div class="col">
 				<h4>Vetement :</h4>	
 				<div class="img-thumbnail">
-						<a href="recherche.php?search=<?php echo $bs_vetements_titre; ?>">
+						<a href="produit.php?id=<?php echo $bs_vetements_id; ?>&cat=vetements">
 							<img src="<?php echo $bs_vetements_photo; ?>" style="width: 100%">
 							<div class="caption">
 								<p>
