@@ -2,6 +2,7 @@
 	
 	session_start();
 
+	
 	if(!empty($_SESSION)) {
 		header('Location: '. 'page_compte.php');
 	}

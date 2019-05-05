@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if (isset($_SESSION['ID']))
+{
+	header("location: page_compte_".$_SESSION['statut'].".php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -195,10 +206,11 @@
 							}
 
 							//Unicité du mail dans la DB
+							$sql = "";
 							$sql0 = "SELECT acheteur.mail, vendeur.mail FROM acheteur,vendeur WHERE acheteur.mail = '$mail' OR vendeur.mail = '$mail'";
 							$req0 = mysqli_query($connection, $sql0) or die ("Message d'erreur1: " . mysqli_error($connection) );
 
-							$adresse = $num_voie . $rue;; 
+							$adresse = $num_voie . " " . $rue;; 
 							if(mysqli_num_rows($req0) == 0){
 								
 								if($statut == "acheteur") {			
@@ -217,13 +229,8 @@
 							}
 
 							if($connecte == true) {
-								$_SESSION['mail'] = $mail;
-								$_SESSION['MDP'] = $MDP; 
-								$_SESSION['statut'] = $statut;
-								$req = mysqli_query($connection, $sql) or die ("Message d'erreur3: " . mysqli_error($connection) );
-								while($data = mysqli_fetch_assoc($req)) { 
-									$_SESSION['ID'] = $data['id'];
-								}
+								$result = mysqli_query($connection, $sql) or die ("Message d'erreur3: " . mysqli_error($connection) );
+								echo "Votre compte a bien été cree, vous pouvez vous <a href='compte.php'>connecter</a> !<br />";
 							}
 							else {
 								echo 'Impossible de créer le compte compte.<br>';
@@ -238,15 +245,7 @@
 						echo 'Des champs sont vides';
 					}
 				}
-			if($_SESSION['statut'] == "acheteur") {
-				echo "<script>window.location.href='page_compte_acheteur.php';</script>";
-			}
-			if($_SESSION['statut'] == "vendeur") {
-				echo "<script>window.location.href='page_compte_vendeur.php';</script>";
-			}
-			if($_SESSION['statut'] == "admin") {
-				echo "<script>window.location.href='page_compte_admin.php';</script>";
-			}
+
 		?>	
 		
  	</form>
