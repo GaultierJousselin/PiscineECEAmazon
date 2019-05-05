@@ -13,8 +13,8 @@ body {
 	font-size: 12px;
 	color: red;
 }
-
-.search_cat {
+ 
+.filter_cat {
 	position: fixed;
 	top: 80px;
 	left: 20px;

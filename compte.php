@@ -311,14 +311,6 @@ if (isset($_SESSION['ID']))
 			?>
 			</form>
 		</div>
-
-		<?php 
-			if(!empty($_SESSION) ) {
-				$statut = $_SESSION['statut'];
-				echo "<script>window.location.href='page_compte_" . $statut . ".php';</script>";
-			}
-
-		?>
 		<?php include 'footer.php'; ?>
 	</body>
 </html>
