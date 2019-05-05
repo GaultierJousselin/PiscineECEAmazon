@@ -60,7 +60,6 @@ if (isset($_SESSION['ID']))
 					</label>
 
 					<?php
-						
 						//Connexion pour un acheteur / vendeur
 						if(isset($_POST['button1'])) {
 							$mail = isset($_POST["mail"])? $_POST["mail"]: "";
@@ -191,7 +190,7 @@ if (isset($_SESSION['ID']))
 						<label for="nom" class="col-md-2 col-form-label" placeholder="Nom">Nom & Prénom</label>
 						<div class="col-md-2">
 							<input type="text" class="form-control" name="nom"/>
-						</div>
+						</div>e
 						<label for="prenom" class="col-form-label" placeholder="prenom"></label>
 						<div class="col-md-2">
 							<input type="text" class="form-control" name="prenom"/>
@@ -312,6 +311,14 @@ if (isset($_SESSION['ID']))
 			?>
 			</form>
 		</div>
+
+		<?php 
+			if(!empty($_SESSION) ) {
+				$statut = $_SESSION['statut'];
+				echo "<script>window.location.href='page_compte_" . $statut . ".php';</script>";
+			}
+
+		?>
 		<?php include 'footer.php'; ?>
 	</body>
 </html>

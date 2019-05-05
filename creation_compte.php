@@ -245,7 +245,6 @@ if (isset($_SESSION['ID']))
 						echo 'Des champs sont vides';
 					}
 				}
-
 		?>	
 		
  	</form>

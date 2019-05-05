@@ -20,7 +20,6 @@ session_start();
 </head>
 <body>
 	<?php include 'Navbar.php'; ?>
-
 		<div class="container container-margin">
 	<div class="col-md-12">
 		<h2>Votre compte client</h2>
