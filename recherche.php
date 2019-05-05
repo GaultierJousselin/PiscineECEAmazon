@@ -309,7 +309,7 @@ if(isset($categories)){
 								echo "		<div class='row'>";
 								echo "			<tr class='col-md-2'>";
 								echo "				<td>";
-								echo "					<strong>".$value['titre']."</strong>";
+								echo "					<strong><a href='produit.php?cat=".$cat."&id=".$value['id']."'>".$value['titre']."</strong>";
 								echo "				</td>";
 								echo "			</tr>";
 								echo "		</div>";
